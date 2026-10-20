@@ -1,4 +1,4 @@
-const CACHE_NAME = 'math-royale-racer-v3';
+const CACHE_NAME = 'sunny-math-racer-gp-v4';
 const CORE_ASSETS = [
   './',
   './index.html',

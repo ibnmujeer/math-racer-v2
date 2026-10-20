@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#1e293b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="MathRoyale">
-  <title>Math Royale Racer - Addition & Speed Arena!</title>
+  <meta name="apple-mobile-web-app-title" content="MathRacer">
+  <title>Sunny Math Racer - Grand Prix Addition & Speed!</title>
 
   <!-- External PWA Manifest File for Native Installation -->
   <link rel="manifest" href="./manifest.json">
@@ -21,8 +21,8 @@
 
   <style>
     /* ==========================================================================
-       OFFLINE-SAFE CORE RESET & CLASH ROYALE DESIGN SYSTEM
-       (Ensures 100% layout & button functionality even with zero internet)
+       OFFLINE-SAFE CORE RESET & TACTILE 3D RACING UI DESIGN SYSTEM
+       (100% functional offline on mobile & tablet devices)
        ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -54,7 +54,7 @@
       display: none !important;
     }
 
-    /* Full-Bleed Immersive Arena Viewport */
+    /* Full-Bleed Mobile & Tablet Viewport */
     #game-container {
       position: relative;
       width: 100%;
@@ -78,7 +78,7 @@
       cursor: pointer;
     }
 
-    /* Clash Royale Signature Outlined Text */
+    /* Bold Outlined Racing Text */
     .cr-stroke {
       color: #ffffff;
       text-shadow:
@@ -98,7 +98,7 @@
         1px 1px 0 #000000;
     }
 
-    /* Clash Royale 3D Tactile Buttons */
+    /* 3D Tactile Racing Buttons */
     .cr-btn {
       position: relative;
       cursor: pointer;
@@ -107,18 +107,15 @@
       font-weight: 800;
       transition: transform 0.08s ease, filter 0.12s ease;
       box-shadow:
-        0 5px 0 var(--btn-depth, #0f172a),
-        0 8px 14px rgba(0, 0, 0, 0.45),
-        inset 0 3px 0 rgba(255, 255, 255, 0.45);
+        0 4px 0 var(--btn-depth, #0f172a),
+        0 7px 12px rgba(0, 0, 0, 0.45),
+        inset 0 2.5px 0 rgba(255, 255, 255, 0.45);
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
-    .cr-btn:hover {
-      filter: brightness(1.06);
-    }
     .cr-btn:active {
-      transform: translateY(4px);
+      transform: translateY(3px);
       box-shadow:
         0 1px 0 var(--btn-depth, #0f172a),
         0 3px 6px rgba(0, 0, 0, 0.4),
@@ -160,64 +157,90 @@
       transform: translateY(-2px);
     }
 
-    /* Clash Royale Panels & Wooden Card Deck */
+    /* Racing Dashboard Panels & Pit Tray */
     .cr-panel-dark {
-      background: rgba(15, 23, 42, 0.82);
+      background: rgba(15, 23, 42, 0.85);
       border: 2.5px solid #334155;
       border-radius: 14px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
     .cr-modal-frame {
-      background: linear-gradient(180deg, #1e3a8a 0%, #172554 100%);
+      background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
       border: 4px solid #f59e0b;
-      border-radius: 24px;
+      border-radius: 22px;
       box-shadow:
         0 10px 0 #78350f,
-        0 20px 40px rgba(0, 0, 0, 0.8),
+        0 20px 40px rgba(0, 0, 0, 0.85),
         inset 0 3px 0 rgba(255, 255, 255, 0.35);
     }
-    .cr-wood-tray {
-      background: linear-gradient(180deg, #6d4124 0%, #4e2c16 65%, #3b200f 100%);
-      border-top: 4px solid #9a6338;
-      border-left: 3px solid #85522b;
-      border-right: 3px solid #85522b;
+    .cr-pit-tray {
+      background: linear-gradient(180deg, #334155 0%, #1e293b 65%, #0f172a 100%);
+      border-top: 4px solid #f59e0b;
+      border-left: 3px solid #475569;
+      border-right: 3px solid #475569;
       box-shadow:
         0 -6px 18px rgba(0, 0, 0, 0.65),
         inset 0 3px 0 rgba(255, 255, 255, 0.2);
     }
-    .cr-deck-card {
+    .cr-lane-card {
       position: relative;
       cursor: pointer;
       border: 3px solid #f59e0b;
       border-radius: 14px;
       box-shadow:
-        0 5px 0 #1c1917,
+        0 5px 0 #090d16,
         0 8px 12px rgba(0, 0, 0, 0.55),
         inset 0 2px 0 rgba(255, 255, 255, 0.5);
       transition: transform 0.1s ease, border-color 0.1s ease;
     }
-    .cr-deck-card:active {
+    .cr-lane-card:active {
       transform: translateY(4px) scale(0.97);
     }
-    .cr-deck-card-active {
+    .cr-lane-card-active {
       border-color: #fde047 !important;
       transform: translateY(-5px) scale(1.03);
       box-shadow:
-        0 8px 0 #1c1917,
-        0 0 16px rgba(250, 204, 21, 0.85),
+        0 8px 0 #090d16,
+        0 0 16px rgba(250, 204, 21, 0.9),
         inset 0 2px 0 rgba(255, 255, 255, 0.75);
     }
 
-    /* Elixir Bar */
-    .cr-elixir-track {
-      background: #1e1b2e;
-      border: 2.5px solid #090d16;
+    /* 10-Car Garage Grid Cards */
+    .car-slot-btn {
+      position: relative;
+      cursor: pointer;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 2.5px solid #475569;
+      border-radius: 12px;
+      padding: 4px 2px 3px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 0 #090d16, inset 0 1px 0 rgba(255,255,255,0.18);
+      transition: transform 0.1s ease, border-color 0.1s ease;
+    }
+    .car-slot-btn:active {
+      transform: translateY(2px);
+    }
+    .car-slot-active {
+      background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 100%);
+      border-color: #fde047 !important;
+      border-width: 3px;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 0 #090d16, 0 0 12px rgba(250, 204, 21, 0.75);
+    }
+
+    /* Nitro / RPM Speed Bar */
+    .cr-nitro-track {
+      background: #090d16;
+      border: 2.5px solid #334155;
       border-radius: 999px;
       box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.8);
       overflow: hidden;
     }
-    .cr-elixir-fill {
-      background: linear-gradient(180deg, #f0abfc 0%, #d946ef 45%, #9333ea 100%);
+    .cr-nitro-fill {
+      background: linear-gradient(90deg, #38bdf8 0%, #22c55e 50%, #facc15 100%);
       box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55);
       transition: width 0.25s ease-out;
     }
@@ -242,101 +265,105 @@
 <body>
 
   <div id="game-container">
-    <!-- Full-Bleed Arena Track Canvas -->
+    <!-- Full-Bleed Grand Prix Track Canvas -->
     <canvas id="gameCanvas"></canvas>
 
     <!-- =====================================================================
-         TOP CLASH ROYALE ARENA HUD
+         TOP GRAND PRIX RACING HUD
          ===================================================================== -->
-    <header id="top-hud" style="position: relative; z-index: 10; width: 100%; padding: 8px 10px 4px; pointer-events: none;">
+    <header id="top-hud" style="position: relative; z-index: 10; width: 100%; padding: 6px 8px 4px; pointer-events: none;">
       
-      <!-- Top Row: Player Banner (Left) | 3 Lives Hearts (Center) | Speedometer Timer Box (Right) -->
+      <!-- Top Row: Driver Badge (Left) | 3 Lives Hearts (Center) | Speedometer Box (Right) -->
       <div style="display: flex; align-items: stretch; justify-content: space-between; gap: 6px; pointer-events: auto;">
         
-        <!-- Left: Clash Royale Player Shield, Name & High Score Trophies -->
-        <div class="cr-panel-dark" style="padding: 5px 10px; display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
-          <div style="width: 34px; height: 38px; border-radius: 9px; background: linear-gradient(180deg, #3b82f6, #1d4ed8); border: 2px solid #fde047; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-            <span id="hud-car-icon" style="font-size: 19px; line-height: 1;">🏎️</span>
+        <!-- Left: Driver License Badge, Name & Trophy Count -->
+        <div class="cr-panel-dark" style="padding: 4px 8px; display: flex; align-items: center; gap: 7px; min-width: 0; flex: 1;">
+          <div style="width: 32px; height: 36px; border-radius: 9px; background: linear-gradient(180deg, #3b82f6, #1d4ed8); border: 2px solid #fde047; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+            <span id="hud-car-icon" style="font-size: 18px; line-height: 1;">🏎️</span>
           </div>
           <div style="display: flex; flex-direction: column; min-width: 0;">
             <div style="display: flex; align-items: center; gap: 5px;">
-              <span id="hud-player-name" class="cr-stroke-sm" style="font-size: 14px; font-weight: 900; color: #f472b6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px;">Racer</span>
+              <span id="hud-player-name" class="cr-stroke-sm" style="font-size: 13px; font-weight: 900; color: #38bdf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 95px;">Speedy</span>
               <span id="age-badge-hud" style="background: #7e22ce; border: 1px solid #e9d5ff; color: #fff; font-size: 9px; font-weight: 800; padding: 1px 5px; border-radius: 6px;">6-10Y</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px; margin-top: 1px;">
+            <div style="display: flex; align-items: center; gap: 7px; margin-top: 1px;">
               <span class="cr-stroke-sm" style="font-size: 12px; font-weight: 900; color: #fde047;">🏆 <span id="solved-display">0</span></span>
               <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">Best: <span id="hud-best-score" style="color: #fde047;">0</span></span>
             </div>
           </div>
         </div>
 
-        <!-- Center: 3 Lives Royale Heart Shield (3 Wrongs = Game Over!) -->
-        <div id="lives-panel" class="cr-panel-dark" style="padding: 5px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-color: #f43f5e; flex-shrink: 0;">
-          <div id="lives-hearts" style="display: flex; align-items: center; gap: 4px; font-size: 18px; line-height: 1;">
+        <!-- Center: 3 Racing Lives (3 Wrongs = Race Over!) -->
+        <div id="lives-panel" class="cr-panel-dark" style="padding: 4px 9px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-color: #f43f5e; flex-shrink: 0;">
+          <div id="lives-hearts" style="display: flex; align-items: center; gap: 3px; font-size: 16px; line-height: 1;">
             <span>❤️</span><span>❤️</span><span>❤️</span>
           </div>
-          <span style="font-size: 9px; font-weight: 900; color: #fda4af; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;">3 LIVES</span>
+          <span style="font-size: 8.5px; font-weight: 900; color: #fda4af; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;">3 LIVES</span>
         </div>
 
-        <!-- Right: Clash Royale "Time Left" Style Speedometer Box -->
-        <div class="cr-panel-dark" style="padding: 5px 10px; display: flex; align-items: center; gap: 7px; border-color: #f59e0b; flex-shrink: 0;">
+        <!-- Right: Digital Racing Speedometer Box -->
+        <div class="cr-panel-dark" style="padding: 4px 9px; display: flex; align-items: center; gap: 6px; border-color: #f59e0b; flex-shrink: 0;">
           <div style="display: flex; flex-direction: column; align-items: flex-end;">
-            <span style="font-size: 9px; font-weight: 900; color: #fde047; text-transform: uppercase;">Speedometer</span>
+            <span style="font-size: 8.5px; font-weight: 900; color: #fde047; text-transform: uppercase;">Speedometer</span>
             <div style="display: flex; align-items: baseline; gap: 3px;">
-              <span id="speed-value" class="cr-stroke" style="font-size: 22px; font-weight: 900; line-height: 1;">0</span>
-              <span id="speed-unit" class="cr-stroke-sm" style="font-size: 11px; font-weight: 900; color: #38bdf8;">km/hr</span>
+              <span id="speed-value" class="cr-stroke" style="font-size: 21px; font-weight: 900; line-height: 1;">0</span>
+              <span id="speed-unit" class="cr-stroke-sm" style="font-size: 10px; font-weight: 900; color: #38bdf8;">km/hr</span>
             </div>
-            <span id="comparison-text" style="font-size: 9px; font-weight: 800; color: #4ade80; max-width: 96px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Parked</span>
+            <span id="comparison-text" style="font-size: 9px; font-weight: 800; color: #4ade80; max-width: 92px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Parked</span>
           </div>
-          <div style="width: 34px; height: 34px; border-radius: 9px; background: #090d16; border: 2px solid #38bdf8; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <span id="comparison-emoji" style="font-size: 18px; line-height: 1;">🅿️</span>
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: #090d16; border: 2px solid #38bdf8; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <span id="comparison-emoji" style="font-size: 17px; line-height: 1;">🅿️</span>
           </div>
         </div>
 
       </div>
 
-      <!-- Second Row: Prominent Clash Royale Side Controls + Math Battle Scroll Banner -->
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; pointer-events: auto;">
+      <!-- Second Row: Prominent Pit Controls + Math Checkpoint Gantry Banner -->
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 5px; pointer-events: auto;">
         
-        <!-- PROMINENT SOUND & PAUSE BUTTONS (Clash Royale Left-Dock Style) -->
-        <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-          <button id="pause-btn" type="button" class="cr-btn cr-btn-blue" style="width: 48px; height: 48px; flex-direction: column; padding: 2px;" title="Pause & Garage">
-            <span style="font-size: 18px; line-height: 1;">⏸️</span>
-            <span class="cr-stroke-sm" style="font-size: 8px; font-weight: 900; margin-top: 2px;">PAUSE</span>
+        <!-- PROMINENT PAUSE, SOUND & TROPHY LEADERBOARD BUTTONS -->
+        <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+          <button id="pause-btn" type="button" class="cr-btn cr-btn-blue" style="width: 44px; height: 44px; flex-direction: column; padding: 2px;" title="Pause Race & Garage">
+            <span style="font-size: 16px; line-height: 1;">⏸️</span>
+            <span class="cr-stroke-sm" style="font-size: 7.5px; font-weight: 900; margin-top: 2px;">PAUSE</span>
           </button>
-          <button id="sound-btn" type="button" class="cr-btn cr-btn-gold" style="width: 48px; height: 48px; flex-direction: column; padding: 2px;" title="Toggle Volume">
-            <span id="sound-emoji" style="font-size: 18px; line-height: 1;">🔊</span>
-            <span id="sound-label" class="cr-stroke-sm" style="font-size: 8px; font-weight: 900; margin-top: 2px;">SOUND</span>
+          <button id="sound-btn" type="button" class="cr-btn cr-btn-gold" style="width: 44px; height: 44px; flex-direction: column; padding: 2px;" title="Toggle Engine & Game Volume">
+            <span id="sound-emoji" style="font-size: 16px; line-height: 1;">🔊</span>
+            <span id="sound-label" class="cr-stroke-sm" style="font-size: 7.5px; font-weight: 900; margin-top: 2px;">SOUND</span>
+          </button>
+          <button id="hud-scores-btn" type="button" class="cr-btn cr-btn-purple" style="width: 44px; height: 44px; flex-direction: column; padding: 2px;" title="All Saved High Scores">
+            <span style="font-size: 16px; line-height: 1;">🏆</span>
+            <span class="cr-stroke-sm" style="font-size: 7.5px; font-weight: 900; margin-top: 2px;">SCORES</span>
           </button>
         </div>
 
-        <!-- Center/Right: Royale Math Problem Battle Banner -->
-        <div id="math-banner" style="flex: 1; background: linear-gradient(180deg, #fde047 0%, #f59e0b 65%, #d97706 100%); border: 3.5px solid #111827; border-radius: 18px; padding: 5px 12px; box-shadow: 0 5px 0 #78350f, 0 8px 15px rgba(0,0,0,0.45), inset 0 2px 0 rgba(255,255,255,0.75); display: flex; flex-direction: column; align-items: center; justify-content: center;">
-          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 6px;">
-            <span style="background: #be123c; border: 2px solid #111827; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 8px; text-transform: uppercase;">SOLVE</span>
-            <span id="hud-question" class="cr-stroke" style="font-size: 26px; font-weight: 900; letter-spacing: 0.03em; line-height: 1.05;">1 + 2 = ?</span>
-            <span style="background: rgba(15,23,42,0.85); color: #fde047; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 8px;">Trip: <span id="distance-display">0.00</span> <span id="distance-unit">km</span></span>
+        <!-- Center/Right: Next Addition Checkpoint Banner -->
+        <div id="math-banner" style="flex: 1; background: linear-gradient(180deg, #fde047 0%, #f59e0b 65%, #d97706 100%); border: 3.5px solid #111827; border-radius: 16px; padding: 4px 10px; box-shadow: 0 4px 0 #78350f, 0 7px 14px rgba(0,0,0,0.45), inset 0 2px 0 rgba(255,255,255,0.75); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 4px;">
+            <span style="background: #be123c; border: 2px solid #111827; color: #fff; font-size: 9px; font-weight: 900; padding: 1px 6px; border-radius: 7px; text-transform: uppercase;">NEXT SUM</span>
+            <span id="hud-question" class="cr-stroke" style="font-size: 24px; font-weight: 900; letter-spacing: 0.02em; line-height: 1.05;">1 + 2 = ?</span>
+            <span style="background: rgba(15,23,42,0.85); color: #fde047; font-size: 9.5px; font-weight: 900; padding: 2px 6px; border-radius: 7px;">Lap: <span id="distance-display">0.00</span> <span id="distance-unit">km</span></span>
           </div>
           <!-- Visual Counting Dots Row (Shown automatically for Under 6 Yrs mode) -->
-          <div id="counting-dots-row" class="hidden" style="width: 100%; margin-top: 3px; padding-top: 3px; border-top: 1.5px solid rgba(120,53,15,0.35); display: flex; align-items: center; justify-content: center; gap: 6px;">
-            <div id="dots-group-a" style="display: flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.9); padding: 2px 7px; border-radius: 999px; border: 1.5px solid #111827;"></div>
-            <span class="cr-stroke-sm" style="font-size: 13px; font-weight: 900;">+</span>
-            <div id="dots-group-b" style="display: flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.9); padding: 2px 7px; border-radius: 999px; border: 1.5px solid #111827;"></div>
+          <div id="counting-dots-row" class="hidden" style="width: 100%; margin-top: 3px; padding-top: 2px; border-top: 1.5px solid rgba(120,53,15,0.35); display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <div id="dots-group-a" style="display: flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.92); padding: 2px 6px; border-radius: 999px; border: 1.5px solid #111827;"></div>
+            <span class="cr-stroke-sm" style="font-size: 12px; font-weight: 900;">+</span>
+            <div id="dots-group-b" style="display: flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.92); padding: 2px 6px; border-radius: 999px; border: 1.5px solid #111827;"></div>
           </div>
         </div>
 
       </div>
 
       <!-- Speed Concept Educational Ribbon -->
-      <div id="speed-meaning-bar" style="margin-top: 5px; background: rgba(15, 23, 42, 0.86); border: 2px solid #38bdf8; border-radius: 10px; padding: 2px 10px; text-align: center; font-size: 11px; font-weight: 800; color: #e0f2fe; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        ⚡ <span id="speed-meaning-text">Tap a Lane Card below to solve & launch at 10 km/hr!</span>
+      <div id="speed-meaning-bar" style="margin-top: 4px; background: rgba(15, 23, 42, 0.88); border: 2px solid #38bdf8; border-radius: 10px; padding: 2px 8px; text-align: center; font-size: 10.5px; font-weight: 800; color: #e0f2fe; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        ⚡ <span id="speed-meaning-text">Tap a Lane Card below to solve & accelerate to 10 km/hr!</span>
       </div>
 
-      <!-- Active 5s Turbo Boost / 3s Slowdown Banner -->
-      <div id="status-card" style="margin-top: 4px; opacity: 0; transition: opacity 0.15s ease;">
-        <div id="status-badge" style="border-radius: 12px; padding: 3px 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-weight: 900; border: 2.5px solid #111827; background: #16a34a; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.4);">
+      <!-- Active 5s Turbo Boost / 3s Pit Slowdown Banner -->
+      <div id="status-card" style="margin-top: 3px; opacity: 0; transition: opacity 0.15s ease;">
+        <div id="status-badge" style="border-radius: 11px; padding: 2px 9px; display: flex; align-items: center; justify-content: space-between; font-size: 10.5px; font-weight: 900; border: 2px solid #111827; background: #16a34a; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.4);">
           <span id="status-label" class="cr-stroke-sm" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🌟 TURBO BOOST! +5 km/hr</span>
-          <div style="width: 68px; height: 8px; background: rgba(0,0,0,0.45); border-radius: 999px; overflow: hidden; border: 1px solid #fff; margin-left: 8px; flex-shrink: 0;">
+          <div style="width: 64px; height: 7px; background: rgba(0,0,0,0.45); border-radius: 999px; overflow: hidden; border: 1px solid #fff; margin-left: 8px; flex-shrink: 0;">
             <div id="status-bar" style="height: 100%; width: 100%; background: #fde047;"></div>
           </div>
         </div>
@@ -344,170 +371,140 @@
     </header>
 
     <!-- =====================================================================
-         BOTTOM CLASH ROYALE WOODEN BATTLE DECK & ELIXIR BAR
+         BOTTOM COCKPIT LANE CARDS & NITRO SPEED BAR (MOBILE & TABLET)
          ===================================================================== -->
-    <footer id="touch-controls" class="cr-wood-tray" style="position: relative; z-index: 20; width: 100%; padding: 8px 10px 10px; pointer-events: auto;">
+    <footer id="touch-controls" class="cr-pit-tray" style="position: relative; z-index: 20; width: 100%; padding: 7px 8px 9px; pointer-events: auto;">
       
-      <!-- Card Deck Row: Left Steer Button + 3 Clash Royale Lane Cards + Right Steer Button -->
-      <div style="display: flex; align-items: stretch; justify-content: space-between; gap: 7px;">
+      <!-- Steering Row: Left Steer Button + 3 Answer Lane Cards + Right Steer Button -->
+      <div style="display: flex; align-items: stretch; justify-content: space-between; gap: 6px;">
         
         <!-- Left Steer Step Button -->
-        <button id="steer-left-btn" type="button" class="cr-btn cr-btn-blue" style="width: 54px; padding: 6px 2px; flex-direction: column; flex-shrink: 0;" title="Steer Left (Left Arrow / A)">
-          <span style="font-size: 20px; line-height: 1;">⬅️</span>
-          <span class="cr-stroke-sm" style="font-size: 9px; font-weight: 900; margin-top: 2px;">LEFT</span>
+        <button id="steer-left-btn" type="button" class="cr-btn cr-btn-blue" style="width: 52px; padding: 5px 2px; flex-direction: column; flex-shrink: 0;" title="Steer Left">
+          <span style="font-size: 19px; line-height: 1;">⬅️</span>
+          <span class="cr-stroke-sm" style="font-size: 8.5px; font-weight: 900; margin-top: 2px;">LEFT</span>
         </button>
 
-        <!-- 3 Clash Royale Answer Lane Cards -->
-        <div style="flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px;">
+        <!-- 3 Direct Answer Lane Cards -->
+        <div style="flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
           
           <!-- Lane 1 Card -->
-          <button id="touch-lane-0" type="button" class="cr-deck-card" style="background: linear-gradient(180deg, #fb7185 0%, #e11d48 75%, #9f1239 100%); padding: 5px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;">
-            <span style="font-size: 9px; font-weight: 900; background: rgba(0,0,0,0.35); padding: 1px 6px; border-radius: 6px; text-transform: uppercase;">LANE 1</span>
-            <span id="card-ans-0" class="cr-stroke" style="font-size: 22px; font-weight: 900; line-height: 1.1; margin-top: 1px;">?</span>
+          <button id="touch-lane-0" type="button" class="cr-lane-card" style="background: linear-gradient(180deg, #fb7185 0%, #e11d48 75%, #9f1239 100%); padding: 4px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;">
+            <span style="font-size: 8.5px; font-weight: 900; background: rgba(0,0,0,0.35); padding: 1px 6px; border-radius: 6px; text-transform: uppercase;">LANE 1</span>
+            <span id="card-ans-0" class="cr-stroke" style="font-size: 22px; font-weight: 900; line-height: 1.05; margin-top: 1px;">?</span>
           </button>
 
           <!-- Lane 2 Card -->
-          <button id="touch-lane-1" type="button" class="cr-deck-card cr-deck-card-active" style="background: linear-gradient(180deg, #38bdf8 0%, #0284c7 75%, #075985 100%); padding: 5px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;">
-            <span style="font-size: 9px; font-weight: 900; background: rgba(0,0,0,0.35); padding: 1px 6px; border-radius: 6px; text-transform: uppercase;">LANE 2</span>
-            <span id="card-ans-1" class="cr-stroke" style="font-size: 22px; font-weight: 900; line-height: 1.1; margin-top: 1px;">?</span>
+          <button id="touch-lane-1" type="button" class="cr-lane-card cr-lane-card-active" style="background: linear-gradient(180deg, #38bdf8 0%, #0284c7 75%, #075985 100%); padding: 4px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;">
+            <span style="font-size: 8.5px; font-weight: 900; background: rgba(0,0,0,0.35); padding: 1px 6px; border-radius: 6px; text-transform: uppercase;">LANE 2</span>
+            <span id="card-ans-1" class="cr-stroke" style="font-size: 22px; font-weight: 900; line-height: 1.05; margin-top: 1px;">?</span>
           </button>
 
           <!-- Lane 3 Card -->
-          <button id="touch-lane-2" type="button" class="cr-deck-card" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 75%, #92400e 100%); padding: 5px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;">
-            <span style="font-size: 9px; font-weight: 900; background: rgba(0,0,0,0.35); padding: 1px 6px; border-radius: 6px; text-transform: uppercase;">LANE 3</span>
-            <span id="card-ans-2" class="cr-stroke" style="font-size: 22px; font-weight: 900; line-height: 1.1; margin-top: 1px;">?</span>
+          <button id="touch-lane-2" type="button" class="cr-lane-card" style="background: linear-gradient(180deg, #fbbf24 0%, #d97706 75%, #92400e 100%); padding: 4px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;">
+            <span style="font-size: 8.5px; font-weight: 900; background: rgba(0,0,0,0.35); padding: 1px 6px; border-radius: 6px; text-transform: uppercase;">LANE 3</span>
+            <span id="card-ans-2" class="cr-stroke" style="font-size: 22px; font-weight: 900; line-height: 1.05; margin-top: 1px;">?</span>
           </button>
 
         </div>
 
         <!-- Right Steer Step Button -->
-        <button id="steer-right-btn" type="button" class="cr-btn cr-btn-blue" style="width: 54px; padding: 6px 2px; flex-direction: column; flex-shrink: 0;" title="Steer Right (Right Arrow / D)">
-          <span style="font-size: 20px; line-height: 1;">➡️</span>
-          <span class="cr-stroke-sm" style="font-size: 9px; font-weight: 900; margin-top: 2px;">RIGHT</span>
+        <button id="steer-right-btn" type="button" class="cr-btn cr-btn-blue" style="width: 52px; padding: 5px 2px; flex-direction: column; flex-shrink: 0;" title="Steer Right">
+          <span style="font-size: 19px; line-height: 1;">➡️</span>
+          <span class="cr-stroke-sm" style="font-size: 8.5px; font-weight: 900; margin-top: 2px;">RIGHT</span>
         </button>
 
       </div>
 
-      <!-- Bottom Clash Royale Purple Elixir / Speed Charge Bar -->
-      <div style="display: flex; align-items: center; gap: 8px; margin-top: 7px;">
-        <div style="width: 26px; height: 26px; border-radius: 999px; background: linear-gradient(180deg, #f0abfc, #a21caf); border: 2px solid #111827; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-          <span id="elixir-level-badge" class="cr-stroke-sm" style="font-size: 12px; font-weight: 900;">0</span>
+      <!-- Bottom Racing Gear & Nitro Boost Bar -->
+      <div style="display: flex; align-items: center; gap: 7px; margin-top: 6px;">
+        <div style="width: 24px; height: 24px; border-radius: 999px; background: linear-gradient(180deg, #fde047, #d97706); border: 2px solid #111827; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+          <span id="gear-level-badge" class="cr-stroke-sm" style="font-size: 11px; font-weight: 900;">0</span>
         </div>
-        <div class="cr-elixir-track" style="flex: 1; height: 14px; position: relative;">
-          <div id="elixir-bar-fill" class="cr-elixir-fill" style="width: 5%; height: 100%;"></div>
+        <div class="cr-nitro-track" style="flex: 1; height: 12px; position: relative;">
+          <div id="nitro-bar-fill" class="cr-nitro-fill" style="width: 5%; height: 100%;"></div>
         </div>
-        <span class="cr-stroke-sm" style="font-size: 10px; font-weight: 900; color: #f0abfc; flex-shrink: 0;">⚡ SPEED ELIXIR</span>
+        <span class="cr-stroke-sm" style="font-size: 9.5px; font-weight: 900; color: #fde047; flex-shrink: 0;">🏁 NITRO GEAR</span>
       </div>
 
     </footer>
 
     <!-- =====================================================================
-         CLASH ROYALE BATTLE DECK & PLAYER NAME MODAL (START SCREEN)
+         GRAND PRIX GARAGE & 10-CAR SELECTION MODAL (START SCREEN)
          ===================================================================== -->
-    <div id="start-modal" style="position: absolute; inset: 0; z-index: 30; background: radial-gradient(circle at center, rgba(30, 58, 138, 0.94), rgba(9, 13, 22, 0.98)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; overflow-y: auto;">
+    <div id="start-modal" style="position: absolute; inset: 0; z-index: 30; background: radial-gradient(circle at center, rgba(30, 58, 138, 0.96), rgba(9, 13, 22, 0.99)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; overflow-y: auto;">
       
-      <div class="cr-modal-frame" style="width: 100%; max-width: 440px; padding: 14px; display: flex; flex-direction: column; gap: 9px; max-height: 96dvh; overflow-y: auto;">
+      <div class="cr-modal-frame" style="width: 100%; max-width: 460px; padding: 11px 12px; display: flex; flex-direction: column; gap: 7px; max-height: 97dvh; overflow-y: auto;">
         
-        <!-- Top Royale Banner & Live Vehicle Turntable -->
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(9, 13, 22, 0.75); border: 2.5px solid #3b82f6; border-radius: 16px; padding: 8px 12px;">
-          <div style="text-align: left;">
-            <span style="background: linear-gradient(180deg, #fde047, #d97706); color: #111827; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; border: 1.5px solid #111827;">👑 ROYALE ARENA GARAGE</span>
-            <h1 class="cr-stroke" style="font-size: 24px; font-weight: 900; margin: 3px 0 0; line-height: 1.05;">Math Royale Racer</h1>
-            <p id="garage-selection-summary" style="font-size: 11px; font-weight: 800; color: #fde047; margin: 2px 0 0;">
-              Deck: Lightning Red Race Car
+        <!-- Top Grand Prix Header & Live Selected Car Turntable -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; background: rgba(9, 13, 22, 0.78); border: 2.5px solid #3b82f6; border-radius: 16px; padding: 6px 10px;">
+          <div style="text-align: left; min-width: 0; flex: 1;">
+            <span style="background: linear-gradient(180deg, #fde047, #d97706); color: #111827; font-size: 9.5px; font-weight: 900; padding: 1.5px 8px; border-radius: 999px; text-transform: uppercase; border: 1.5px solid #111827;">🏁 GRAND PRIX PADDOCK</span>
+            <h1 class="cr-stroke" style="font-size: 21px; font-weight: 900; margin: 2px 0 0; line-height: 1.05;">Sunny Math Racer</h1>
+            <p id="garage-selection-summary" style="font-size: 11px; font-weight: 800; color: #fde047; margin: 1px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              Car #1: Crimson GT Twin-Stripe
             </p>
           </div>
-          <div style="width: 78px; height: 78px; border-radius: 14px; background: radial-gradient(circle, #1e40af, #090d16); border: 2.5px solid #fde047; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;">
-            <canvas id="previewCanvas" width="96" height="96" style="width: 76px; height: 76px;"></canvas>
+          <div style="width: 68px; height: 68px; border-radius: 14px; background: radial-gradient(circle, #1e40af, #090d16); border: 2.5px solid #fde047; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;">
+            <canvas id="previewCanvas" width="88" height="88" style="width: 66px; height: 66px;"></canvas>
           </div>
         </div>
 
-        <!-- PLAYER NAME INPUT & LOCAL HIGH SCORE HALL OF FAME -->
-        <div style="background: rgba(15, 23, 42, 0.85); border: 2px solid #f59e0b; border-radius: 14px; padding: 8px 10px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <!-- DRIVER NAME INPUT & ALL HIGH SCORES BUTTON -->
+        <div style="background: rgba(15, 23, 42, 0.88); border: 2px solid #f59e0b; border-radius: 14px; padding: 6px 9px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
             <label for="player-name-input" class="cr-stroke-sm" style="font-size: 11px; font-weight: 900; color: #fde047; text-transform: uppercase; white-space: nowrap;">
-              🛡️ Racer Name:
+              🏎️ Driver:
             </label>
-            <input id="player-name-input" type="text" maxlength="14" placeholder="Enter your name..." value="King Racer" style="flex: 1; background: #090d16; color: #ffffff; border: 2px solid #60a5fa; border-radius: 10px; padding: 5px 10px; font-size: 14px; font-weight: 800; outline: none;">
-          </div>
-          <!-- Saved High Scores List -->
-          <div id="start-leaderboard-box" style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: space-between; font-size: 11px; font-weight: 800; color: #cbd5e1;">
-            <span>🏆 Top High Scores:</span>
-            <div id="leaderboard-inline-list" style="display: flex; gap: 8px; overflow-x: auto; color: #fde047;">
-              <span>No races yet!</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 1. PICK RACER AGE GROUP -->
-        <div style="background: rgba(15, 23, 42, 0.7); border: 2px solid #a855f7; border-radius: 14px; padding: 7px 9px;">
-          <span class="cr-stroke-sm" style="font-size: 10px; font-weight: 900; color: #e9d5ff; text-transform: uppercase; display: block; margin-bottom: 5px;">
-            🎂 1. Select Arena League (Age Group)
-          </span>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-            <button id="age-u6-btn" type="button" class="cr-btn cr-btn-slate" style="padding: 6px 6px; flex-direction: column;">
-              <span class="cr-stroke-sm" style="font-size: 13px;">🧸 Under 6 Yrs</span>
-              <span style="font-size: 9px; color: #fde047;">Sums &lt; 10 + Dots</span>
-            </button>
-            <button id="age-6to10-btn" type="button" class="cr-btn cr-btn-purple cr-selected-ring" style="padding: 6px 6px; flex-direction: column;">
-              <span class="cr-stroke-sm" style="font-size: 13px;">🏆 Ages 6 to 10</span>
-              <span style="font-size: 9px; color: #fde047;">Pro Sums Arena</span>
+            <input id="player-name-input" type="text" maxlength="14" placeholder="Driver name..." value="Speedy Racer" style="flex: 1; min-width: 0; background: #090d16; color: #ffffff; border: 2px solid #60a5fa; border-radius: 9px; padding: 4px 8px; font-size: 13px; font-weight: 800; outline: none;">
+            <button id="open-leaderboard-btn" type="button" class="cr-btn cr-btn-gold" style="padding: 5px 9px; font-size: 11px; border-radius: 10px; flex-shrink: 0;">
+              <span class="cr-stroke-sm">🏆 High Scores (<span id="saved-scores-count">0</span>)</span>
             </button>
           </div>
         </div>
 
-        <!-- 2. PICK VEHICLE CARD (Race Car, Big Truck, Cool SUV) -->
-        <div style="background: rgba(15, 23, 42, 0.7); border: 2px solid #f59e0b; border-radius: 14px; padding: 7px 9px;">
-          <span class="cr-stroke-sm" style="font-size: 10px; font-weight: 900; color: #fde68a; text-transform: uppercase; display: block; margin-bottom: 5px;">
-            🚘 2. Choose Battle Vehicle Card
-          </span>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px;">
-            <button id="car-race-btn" type="button" class="cr-btn cr-btn-gold cr-selected-ring" style="padding: 6px 4px; flex-direction: column;">
-              <span style="font-size: 20px; line-height: 1;">🏎️</span>
-              <span class="cr-stroke-sm" style="font-size: 11px; margin-top: 2px;">Race Car</span>
-            </button>
-            <button id="car-truck-btn" type="button" class="cr-btn cr-btn-slate" style="padding: 6px 4px; flex-direction: column;">
-              <span style="font-size: 20px; line-height: 1;">🛻</span>
-              <span class="cr-stroke-sm" style="font-size: 11px; margin-top: 2px;">Big Truck</span>
-            </button>
-            <button id="car-suv-btn" type="button" class="cr-btn cr-btn-slate" style="padding: 6px 4px; flex-direction: column;">
-              <span style="font-size: 20px; line-height: 1;">🚙</span>
-              <span class="cr-stroke-sm" style="font-size: 11px; margin-top: 2px;">Cool SUV</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 3. PICK PAINT LIVERY & 4. PICK SPEED UNIT -->
-        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 8px;">
-          
-          <!-- Paint Color -->
-          <div style="background: rgba(15, 23, 42, 0.7); border: 2px solid #f43f5e; border-radius: 14px; padding: 7px 8px;">
-            <span class="cr-stroke-sm" style="font-size: 10px; font-weight: 900; color: #fecdd3; text-transform: uppercase; display: block; margin-bottom: 5px;">
-              🎨 3. Armor Paint
+        <!-- 1. PICK choose any of the 10 RACE CARS (2 Rows x 5 Cars from Reference Sheet) -->
+        <div style="background: rgba(15, 23, 42, 0.78); border: 2px solid #f59e0b; border-radius: 14px; padding: 6px 8px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+            <span class="cr-stroke-sm" style="font-size: 10px; font-weight: 900; color: #fde68a; text-transform: uppercase;">
+              🏎️ 1. Choose Your Race Car (10 Supercars)
             </span>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
-              <button id="color-red-btn" type="button" class="cr-btn cr-btn-red cr-selected-ring" style="padding: 6px 2px; font-size: 11px;">
-                <span class="cr-stroke-sm">Red</span>
-              </button>
-              <button id="color-blue-btn" type="button" class="cr-btn cr-btn-blue" style="padding: 6px 2px; font-size: 11px;">
-                <span class="cr-stroke-sm">Blue</span>
-              </button>
-              <button id="color-black-btn" type="button" class="cr-btn cr-btn-slate" style="padding: 6px 2px; font-size: 11px;">
-                <span class="cr-stroke-sm">Black</span>
-              </button>
-            </div>
+            <span id="car-style-tag" style="font-size: 9.5px; font-weight: 900; color: #38bdf8;">Tap any car!</span>
           </div>
+          <div id="car-grid-container" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;">
+            <!-- Populated dynamically with 10 live vector car thumbnails -->
+          </div>
+        </div>
 
-          <!-- Speed Unit -->
-          <div style="background: rgba(15, 23, 42, 0.7); border: 2px solid #38bdf8; border-radius: 14px; padding: 7px 8px;">
-            <span class="cr-stroke-sm" style="font-size: 10px; font-weight: 900; color: #bae6fd; text-transform: uppercase; display: block; margin-bottom: 5px;">
-              🌍 4. Speed Unit
+        <!-- 2. PICK AGE DIVISION & 3. SPEEDOMETER UNIT -->
+        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 7px;">
+          
+          <!-- Racer Age Group -->
+          <div style="background: rgba(15, 23, 42, 0.78); border: 2px solid #a855f7; border-radius: 14px; padding: 6px 7px;">
+            <span class="cr-stroke-sm" style="font-size: 9.5px; font-weight: 900; color: #e9d5ff; text-transform: uppercase; display: block; margin-bottom: 4px;">
+              🎂 2. Racer Age Group
             </span>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
-              <button id="unit-km-btn" type="button" class="cr-btn cr-btn-green cr-selected-ring" style="padding: 6px 2px; font-size: 11px;">
+              <button id="age-u6-btn" type="button" class="cr-btn cr-btn-slate" style="padding: 5px 3px; flex-direction: column;">
+                <span class="cr-stroke-sm" style="font-size: 11px;">🧸 &lt; 6 Yrs</span>
+                <span style="font-size: 8px; color: #fde047;">Sums &lt;10 + Dots</span>
+              </button>
+              <button id="age-6to10-btn" type="button" class="cr-btn cr-btn-purple cr-selected-ring" style="padding: 5px 3px; flex-direction: column;">
+                <span class="cr-stroke-sm" style="font-size: 11px;">🏆 6–10 Yrs</span>
+                <span style="font-size: 8px; color: #fde047;">Pro Track</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Speedometer Unit -->
+          <div style="background: rgba(15, 23, 42, 0.78); border: 2px solid #38bdf8; border-radius: 14px; padding: 6px 7px;">
+            <span class="cr-stroke-sm" style="font-size: 9.5px; font-weight: 900; color: #bae6fd; text-transform: uppercase; display: block; margin-bottom: 4px;">
+              🌍 3. Speed Unit
+            </span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+              <button id="unit-km-btn" type="button" class="cr-btn cr-btn-green cr-selected-ring" style="padding: 8px 3px; font-size: 11px;">
                 <span class="cr-stroke-sm">km/hr</span>
               </button>
-              <button id="unit-mph-btn" type="button" class="cr-btn cr-btn-slate" style="padding: 6px 2px; font-size: 11px;">
+              <button id="unit-mph-btn" type="button" class="cr-btn cr-btn-slate" style="padding: 8px 3px; font-size: 11px;">
                 <span class="cr-stroke-sm">mph</span>
               </button>
             </div>
@@ -515,77 +512,109 @@
 
         </div>
 
-        <!-- Big Clash Royale Gold/Green "BATTLE!" Launch Button -->
-        <button id="start-game-btn" type="button" class="cr-btn cr-btn-gold" style="width: 100%; padding: 11px; font-size: 20px; border-radius: 16px; margin-top: 2px;">
-          <span class="cr-stroke">⚔️ BATTLE START! (0 <span id="start-btn-unit">km/hr</span>)</span>
+        <!-- Big Gold/Green "START RACE!" Launch Button -->
+        <button id="start-game-btn" type="button" class="cr-btn cr-btn-gold" style="width: 100%; padding: 10px; font-size: 19px; border-radius: 15px; margin-top: 1px;">
+          <span class="cr-stroke">🚦 START RACE! (0 <span id="start-btn-unit">km/hr</span>)</span>
         </button>
 
       </div>
     </div>
 
     <!-- =====================================================================
-         PAUSE / GARAGE PIT-STOP MODAL
+         ALL SAVED HIGH SCORES LEADERBOARD MODAL
+         ===================================================================== -->
+    <div id="leaderboard-modal" class="hidden" style="position: absolute; inset: 0; z-index: 45; background: rgba(9, 13, 22, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 14px; text-align: center;">
+      <div class="cr-modal-frame" style="width: 100%; max-width: 420px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; max-height: 90dvh;">
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+          <span style="font-size: 24px;">🏆</span>
+          <h2 class="cr-stroke" style="font-size: 24px; margin: 0; color: #fde047;">Grand Prix High Scores</h2>
+          <button id="close-leaderboard-x" type="button" class="cr-btn cr-btn-red" style="width: 34px; height: 34px; font-size: 14px; border-radius: 10px;">✖</button>
+        </div>
+        <p style="font-size: 11.5px; font-weight: 800; color: #cbd5e1; margin: 0;">
+          All saved local race records sorted by sums solved &amp; top speed!
+        </p>
+
+        <!-- Scrollable List of All Saved High Scores -->
+        <div id="all-scores-list" style="width: 100%; flex: 1; min-height: 180px; max-height: 52dvh; overflow-y: auto; background: rgba(9, 13, 22, 0.85); border: 2px solid #f59e0b; border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 6px; text-align: left;">
+        </div>
+
+        <button id="close-leaderboard-btn" type="button" class="cr-btn cr-btn-green" style="width: 100%; padding: 10px; font-size: 16px;">
+          <span class="cr-stroke">✅ Back to Track</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PAUSE / PIT STOP GARAGE MODAL
          ===================================================================== -->
     <div id="pause-modal" class="hidden" style="position: absolute; inset: 0; z-index: 35; background: rgba(9, 13, 22, 0.86); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; text-align: center;">
-      <div class="cr-modal-frame" style="width: 100%; max-width: 360px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
-        <div style="font-size: 46px; line-height: 1;">⏸️</div>
-        <h2 class="cr-stroke" style="font-size: 28px; margin: 0;">Battle Paused</h2>
+      <div class="cr-modal-frame" style="width: 100%; max-width: 360px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 11px;">
+        <div style="font-size: 44px; line-height: 1;">🛞</div>
+        <h2 class="cr-stroke" style="font-size: 27px; margin: 0;">Pit Stop Paused</h2>
         <p style="font-size: 13px; font-weight: 800; color: #cbd5e1; margin: 0;">
-          Your vehicle is safely parked in the arena!
+          Your race car is safely parked in the pit lane!
         </p>
-        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 4px;">
-          <button id="resume-btn" type="button" class="cr-btn cr-btn-green" style="padding: 12px; font-size: 18px;">
-            <span class="cr-stroke">▶️ Resume Battle</span>
+        <div style="display: flex; flex-direction: column; gap: 9px; width: 100%; margin-top: 4px;">
+          <button id="resume-btn" type="button" class="cr-btn cr-btn-green" style="padding: 11px; font-size: 17px;">
+            <span class="cr-stroke">▶️ Resume Race</span>
           </button>
-          <button id="change-unit-btn" type="button" class="cr-btn cr-btn-blue" style="padding: 11px; font-size: 15px;">
-            <span class="cr-stroke">🔧 Battle Deck (Change Car / Name)</span>
+          <button id="pause-leaderboard-btn" type="button" class="cr-btn cr-btn-gold" style="padding: 10px; font-size: 15px;">
+            <span class="cr-stroke">🏆 View All High Scores</span>
+          </button>
+          <button id="change-unit-btn" type="button" class="cr-btn cr-btn-blue" style="padding: 10px; font-size: 14px;">
+            <span class="cr-stroke">🔧 Garage (Change Car / Driver)</span>
           </button>
         </div>
       </div>
     </div>
 
     <!-- =====================================================================
-         GAME OVER / 3 WRONGS BATTLE SUMMARY & HIGH SCORE LEADERBOARD MODAL
+         RACE OVER / 3 WRONGS SUMMARY & LEADERBOARD MODAL
          ===================================================================== -->
-    <div id="gameover-modal" class="hidden" style="position: absolute; inset: 0; z-index: 40; background: radial-gradient(circle at center, rgba(136, 19, 55, 0.92), rgba(9, 13, 22, 0.98)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 14px; text-align: center;">
-      <div class="cr-modal-frame" style="width: 100%; max-width: 400px; padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; border-color: #fb7185;">
+    <div id="gameover-modal" class="hidden" style="position: absolute; inset: 0; z-index: 40; background: radial-gradient(circle at center, rgba(136, 19, 55, 0.92), rgba(9, 13, 22, 0.98)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px; text-align: center;">
+      <div class="cr-modal-frame" style="width: 100%; max-width: 410px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 9px; border-color: #fb7185;">
         
-        <span style="background: #be123c; border: 2px solid #111827; color: #fde047; font-size: 11px; font-weight: 900; padding: 2px 10px; border-radius: 999px; text-transform: uppercase;">3 Lives Lost!</span>
-        <h2 class="cr-stroke" style="font-size: 30px; margin: 0; color: #fda4af;">🏁 Battle Over!</h2>
+        <span style="background: #be123c; border: 2px solid #111827; color: #fde047; font-size: 10.5px; font-weight: 900; padding: 2px 10px; border-radius: 999px; text-transform: uppercase;">3 Lives Used — Pit Flag!</span>
+        <h2 class="cr-stroke" style="font-size: 28px; margin: 0; color: #fda4af;">🏁 Race Over!</h2>
         <p id="gameover-player-line" class="cr-stroke-sm" style="font-size: 14px; font-weight: 800; color: #fde047; margin: 0;">
-          Great effort, King Racer!
+          Great driving, Speedy Racer!
         </p>
 
         <!-- Stats Summary Grid -->
-        <div style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: rgba(9, 13, 22, 0.75); border: 2px solid #334155; border-radius: 14px; padding: 10px;">
+        <div style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; background: rgba(9, 13, 22, 0.78); border: 2px solid #334155; border-radius: 14px; padding: 9px;">
           <div>
-            <span style="font-size: 10px; font-weight: 800; color: #94a3b8; display: block;">SUMS SOLVED</span>
-            <span id="go-solved" class="cr-stroke" style="font-size: 22px; color: #fde047;">0</span>
+            <span style="font-size: 9.5px; font-weight: 800; color: #94a3b8; display: block;">SUMS SOLVED</span>
+            <span id="go-solved" class="cr-stroke" style="font-size: 21px; color: #fde047;">0</span>
           </div>
           <div>
-            <span style="font-size: 10px; font-weight: 800; color: #94a3b8; display: block;">TOP SPEED</span>
-            <span id="go-speed" class="cr-stroke" style="font-size: 22px; color: #38bdf8;">0</span>
+            <span style="font-size: 9.5px; font-weight: 800; color: #94a3b8; display: block;">TOP SPEED</span>
+            <span id="go-speed" class="cr-stroke" style="font-size: 21px; color: #38bdf8;">0</span>
           </div>
           <div>
-            <span style="font-size: 10px; font-weight: 800; color: #94a3b8; display: block;">DISTANCE</span>
-            <span id="go-distance" class="cr-stroke" style="font-size: 22px; color: #4ade80;">0.0</span>
+            <span style="font-size: 9.5px; font-weight: 800; color: #94a3b8; display: block;">LAP DISTANCE</span>
+            <span id="go-distance" class="cr-stroke" style="font-size: 21px; color: #4ade80;">0.0</span>
           </div>
         </div>
 
-        <!-- Top 5 Local High Score Leaderboard -->
-        <div style="width: 100%; background: rgba(15, 23, 42, 0.9); border: 2px solid #f59e0b; border-radius: 14px; padding: 10px; text-align: left;">
-          <div class="cr-stroke-sm" style="font-size: 12px; font-weight: 900; color: #fde047; text-align: center; margin-bottom: 6px; text-transform: uppercase;">
-            🏆 Arena High Scores (Top Racers)
+        <!-- Scrollable Local High Score Leaderboard -->
+        <div style="width: 100%; background: rgba(15, 23, 42, 0.92); border: 2px solid #f59e0b; border-radius: 14px; padding: 9px; text-align: left;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
+            <span class="cr-stroke-sm" style="font-size: 11px; font-weight: 900; color: #fde047; text-transform: uppercase;">
+              🏆 Grand Prix Leaderboard
+            </span>
+            <button id="gameover-all-scores-btn" type="button" style="background: #1d4ed8; color: #fff; border: 1.5px solid #fde047; border-radius: 7px; padding: 1px 7px; font-size: 10px; font-weight: 900; cursor: pointer;">
+              View All
+            </button>
           </div>
-          <div id="gameover-leaderboard-list" style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 800;"></div>
+          <div id="gameover-leaderboard-list" style="display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; font-weight: 800; max-height: 130px; overflow-y: auto;"></div>
         </div>
 
-        <div style="display: flex; gap: 8px; width: 100%; margin-top: 4px;">
-          <button id="gameover-retry-btn" type="button" class="cr-btn cr-btn-gold" style="flex: 1.4; padding: 12px; font-size: 17px;">
-            <span class="cr-stroke">⚔️ Battle Again!</span>
+        <div style="display: flex; gap: 8px; width: 100%; margin-top: 2px;">
+          <button id="gameover-retry-btn" type="button" class="cr-btn cr-btn-gold" style="flex: 1.4; padding: 11px; font-size: 16px;">
+            <span class="cr-stroke">🚦 Race Again!</span>
           </button>
-          <button id="gameover-garage-btn" type="button" class="cr-btn cr-btn-blue" style="flex: 1; padding: 12px; font-size: 14px;">
-            <span class="cr-stroke">🔧 Deck</span>
+          <button id="gameover-garage-btn" type="button" class="cr-btn cr-btn-blue" style="flex: 1; padding: 11px; font-size: 14px;">
+            <span class="cr-stroke">🔧 Garage</span>
           </button>
         </div>
 
@@ -596,16 +625,16 @@
 
   <script>
     /* ==========================================================================
-       0. OFFLINE-SAFE HIGH SCORE & PROFILE STORAGE (INDEXEDDB)
-       Persists Player Name & Top High Scores locally on the device
+       0. OFFLINE-SAFE HIGH SCORE & DRIVER PROFILE STORAGE (INDEXEDDB + FALLBACK)
+       Saves all race records locally on the mobile or tablet device
        ========================================================================== */
     class HighScoreStore {
       constructor() {
-        this.dbName = 'MathRoyaleRacerDB';
+        this.dbName = 'SunnyMathRacerGrandPrixDB';
         this.storeName = 'kvStore';
         this.dbPromise = null;
         this.memoryFallback = {
-          playerName: 'King Racer',
+          playerName: 'Speedy Racer',
           highScores: []
         };
       }
@@ -667,8 +696,8 @@
         });
       }
 
-      async saveScore(name, solved, topSpeed, unit) {
-        const cleanName = (name || 'King Racer').trim().slice(0, 14) || 'King Racer';
+      async saveScore(name, solved, topSpeed, unit, carName) {
+        const cleanName = (name || 'Speedy Racer').trim().slice(0, 14) || 'Speedy Racer';
         await this.set('playerName', cleanName);
         const scores = (await this.get('highScores', [])) || [];
         scores.push({
@@ -676,19 +705,20 @@
           solved,
           topSpeed,
           unit,
+          carName: carName || 'Race Car',
           date: Date.now()
         });
         scores.sort((a, b) => (b.solved - a.solved) || (b.topSpeed - a.topSpeed));
-        const top5 = scores.slice(0, 5);
-        await this.set('highScores', top5);
-        return top5;
+        const allSaved = scores.slice(0, 50); // Keep up to 50 local high scores
+        await this.set('highScores', allSaved);
+        return allSaved;
       }
     }
 
     const scoreStore = new HighScoreStore();
 
     /* ==========================================================================
-       1. PROCEDURAL WEB AUDIO SYNTHESIZER (NO EXTERNAL ASSETS NEEDED)
+       1. PROCEDURAL WEB AUDIO SYNTHESIZER (SMOOTH RACE CAR ENGINE PURR)
        ========================================================================== */
     class SoundFX {
       constructor() {
@@ -734,7 +764,7 @@
       playSuccessFanfare() {
         if (this.muted || !this.ctx) return;
         try {
-          const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+          const notes = [523.25, 659.25, 783.99, 1046.50];
           notes.forEach((freq, idx) => {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
@@ -754,7 +784,7 @@
       playGentleOops() {
         if (this.muted || !this.ctx) return;
         try {
-          const notes = [349.23, 293.66]; // F4 -> D4
+          const notes = [349.23, 293.66];
           notes.forEach((freq, idx) => {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
@@ -771,10 +801,10 @@
         } catch (e) {}
       }
 
-      playGameOverHorn() {
+      playRaceOverHorn() {
         if (this.muted || !this.ctx) return;
         try {
-          const notes = [392.00, 349.23, 329.63, 261.63]; // G4, F4, E4, C4 Royale defeat cadence
+          const notes = [392.00, 349.23, 329.63, 261.63];
           notes.forEach((freq, idx) => {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
@@ -791,7 +821,7 @@
         } catch (e) {}
       }
 
-      playRevPreview(carType = 'race') {
+      playRevPreview(carIndex = 0) {
         if (this.muted || !this.ctx) return;
         try {
           const now = this.ctx.currentTime;
@@ -801,42 +831,21 @@
           const gain = this.ctx.createGain();
 
           filter.type = 'lowpass';
+          const pitchShift = 65 + (carIndex % 5) * 6;
+          osc1.type = 'triangle';
+          osc2.type = 'sine';
+          osc1.frequency.setValueAtTime(pitchShift, now);
+          osc1.frequency.exponentialRampToValueAtTime(pitchShift * 1.9, now + 0.16);
+          osc1.frequency.exponentialRampToValueAtTime(pitchShift * 1.2, now + 0.36);
 
-          if (carType === 'race') {
-            osc1.type = 'triangle';
-            osc2.type = 'sine';
-            osc1.frequency.setValueAtTime(75, now);
-            osc1.frequency.exponentialRampToValueAtTime(145, now + 0.18);
-            osc1.frequency.exponentialRampToValueAtTime(90, now + 0.38);
-            osc2.frequency.setValueAtTime(150, now);
-            osc2.frequency.exponentialRampToValueAtTime(290, now + 0.18);
-            osc2.frequency.exponentialRampToValueAtTime(180, now + 0.38);
-            filter.frequency.setValueAtTime(340, now);
-          } else if (carType === 'truck') {
-            osc1.type = 'sine';
-            osc2.type = 'triangle';
-            osc1.frequency.setValueAtTime(38, now);
-            osc1.frequency.exponentialRampToValueAtTime(62, now + 0.22);
-            osc1.frequency.exponentialRampToValueAtTime(42, now + 0.44);
-            osc2.frequency.setValueAtTime(57, now);
-            osc2.frequency.exponentialRampToValueAtTime(93, now + 0.22);
-            osc2.frequency.exponentialRampToValueAtTime(63, now + 0.44);
-            filter.frequency.setValueAtTime(170, now);
-          } else {
-            osc1.type = 'sine';
-            osc2.type = 'sine';
-            osc1.frequency.setValueAtTime(55, now);
-            osc1.frequency.exponentialRampToValueAtTime(92, now + 0.2);
-            osc1.frequency.exponentialRampToValueAtTime(62, now + 0.4);
-            osc2.frequency.setValueAtTime(82.5, now);
-            osc2.frequency.exponentialRampToValueAtTime(138, now + 0.2);
-            osc2.frequency.exponentialRampToValueAtTime(93, now + 0.4);
-            filter.frequency.setValueAtTime(220, now);
-          }
+          osc2.frequency.setValueAtTime(pitchShift * 1.5, now);
+          osc2.frequency.exponentialRampToValueAtTime(pitchShift * 2.8, now + 0.16);
+          osc2.frequency.exponentialRampToValueAtTime(pitchShift * 1.8, now + 0.36);
+          filter.frequency.setValueAtTime(320, now);
 
           gain.gain.setValueAtTime(0.001, now);
-          gain.gain.linearRampToValueAtTime(0.08, now + 0.12);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.44);
+          gain.gain.linearRampToValueAtTime(0.075, now + 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
 
           osc1.connect(filter);
           osc2.connect(filter);
@@ -845,12 +854,12 @@
 
           osc1.start(now);
           osc2.start(now);
-          osc1.stop(now + 0.45);
-          osc2.stop(now + 0.45);
+          osc1.stop(now + 0.4);
+          osc2.stop(now + 0.4);
         } catch (e) {}
       }
 
-      updateEngineSound(speed, paused = false, carType = 'race') {
+      updateEngineSound(speed, paused = false) {
         if (!this.ctx) return;
         try {
           if (this.muted || paused || speed <= 0) {
@@ -890,38 +899,15 @@
 
           const now = this.ctx.currentTime;
           const clampedSpd = Math.min(speed, 110);
-
-          if (carType === 'race') {
-            this.engineOsc1.type = 'triangle';
-            this.engineOsc2.type = 'sine';
-            const baseFreq = 62 + clampedSpd * 0.85;
-            this.engineOsc1.frequency.setTargetAtTime(baseFreq, now, 0.1);
-            this.engineOsc2.frequency.setTargetAtTime(baseFreq * 1.5, now, 0.1);
-            this.lfoOsc.frequency.setTargetAtTime(11 + clampedSpd * 0.14, now, 0.1);
-            this.lfoGain.gain.setTargetAtTime(22, now, 0.1);
-            this.engineFilter.frequency.setTargetAtTime(210 + clampedSpd * 1.8, now, 0.1);
-            this.engineGain.gain.setTargetAtTime(0.022, now, 0.12);
-          } else if (carType === 'truck') {
-            this.engineOsc1.type = 'sine';
-            this.engineOsc2.type = 'triangle';
-            const baseFreq = 34 + clampedSpd * 0.36;
-            this.engineOsc1.frequency.setTargetAtTime(baseFreq, now, 0.1);
-            this.engineOsc2.frequency.setTargetAtTime(baseFreq * 1.25, now, 0.1);
-            this.lfoOsc.frequency.setTargetAtTime(6 + clampedSpd * 0.08, now, 0.1);
-            this.lfoGain.gain.setTargetAtTime(35, now, 0.1);
-            this.engineFilter.frequency.setTargetAtTime(125 + clampedSpd * 0.8, now, 0.1);
-            this.engineGain.gain.setTargetAtTime(0.032, now, 0.12);
-          } else {
-            this.engineOsc1.type = 'sine';
-            this.engineOsc2.type = 'sine';
-            const baseFreq = 48 + clampedSpd * 0.55;
-            this.engineOsc1.frequency.setTargetAtTime(baseFreq, now, 0.1);
-            this.engineOsc2.frequency.setTargetAtTime(baseFreq * 2.0, now, 0.1);
-            this.lfoOsc.frequency.setTargetAtTime(8 + clampedSpd * 0.1, now, 0.1);
-            this.lfoGain.gain.setTargetAtTime(10, now, 0.1);
-            this.engineFilter.frequency.setTargetAtTime(165 + clampedSpd * 1.1, now, 0.1);
-            this.engineGain.gain.setTargetAtTime(0.020, now, 0.12);
-          }
+          this.engineOsc1.type = 'triangle';
+          this.engineOsc2.type = 'sine';
+          const baseFreq = 60 + clampedSpd * 0.82;
+          this.engineOsc1.frequency.setTargetAtTime(baseFreq, now, 0.1);
+          this.engineOsc2.frequency.setTargetAtTime(baseFreq * 1.5, now, 0.1);
+          this.lfoOsc.frequency.setTargetAtTime(10 + clampedSpd * 0.14, now, 0.1);
+          this.lfoGain.gain.setTargetAtTime(20, now, 0.1);
+          this.engineFilter.frequency.setTargetAtTime(200 + clampedSpd * 1.7, now, 0.1);
+          this.engineGain.gain.setTargetAtTime(0.022, now, 0.12);
         } catch (e) {}
       }
     }
@@ -947,7 +933,7 @@
           } else if (solvedCount < 10) {
             a = Math.floor(Math.random() * 10) + 2;
             b = Math.floor(Math.random() * 9) + 2;
-          } else {
+            } else {
             a = Math.floor(Math.random() * 15) + 5;
             b = Math.floor(Math.random() * 14) + 4;
           }
@@ -999,60 +985,166 @@
     }
 
     /* ==========================================================================
-       3. TOP-DOWN VECTOR VEHICLE PALETTES
+       3. 10 DISTINCT RACE CARS INSPIRED DIRECTLY BY REFERENCE IMAGE
+       (No trucks or SUVs — 10 pure race cars with unique liveries & silhouettes)
        ========================================================================== */
-    const CAR_PALETTES = {
-      red: {
-        name: 'Lightning Red',
-        shortName: 'Red',
-        body: '#ef4444',
-        bodyShade: '#dc2626',
-        liveryMain: '#ffffff',
-        liveryAccent: '#facc15',
-        rearDeck: '#1e293b',
-        spoiler: '#ef4444',
+    const TEN_RACE_CARS = [
+      {
+        id: 0,
+        name: 'Crimson Twin-Stripe',
+        shortName: 'Red GT',
+        pattern: 'twin_stripe', // Row 4 Col 3: Red sculpted GT with twin white center stripes
+        body: '#e11d48',
+        shade: '#be123c',
+        stripe: '#ffffff',
+        accent: '#facc15',
+        rearDeck: '#881337',
+        spoiler: '#e11d48',
         badgeBg: '#ffffff',
         badgeText: '#0f172a',
-        contour: '#111827'
+        number: '11'
       },
-      blue: {
-        name: 'Turbo Blue',
-        shortName: 'Blue',
+      {
+        id: 1,
+        name: 'Cobalt Twin-Stripe',
+        shortName: 'Blue GT',
+        pattern: 'twin_stripe', // Row 4 Col 4: Royal Blue sculpted GT with twin white stripes
         body: '#2563eb',
-        bodyShade: '#1d4ed8',
-        liveryMain: '#f8fafc',
-        liveryAccent: '#38bdf8',
-        rearDeck: '#0f172a',
+        shade: '#1d4ed8',
+        stripe: '#ffffff',
+        accent: '#38bdf8',
+        rearDeck: '#1e3a8a',
         spoiler: '#38bdf8',
         badgeBg: '#fde047',
         badgeText: '#0f172a',
-        contour: '#111827'
+        number: '22'
       },
-      black: {
-        name: 'Stealth Black',
-        shortName: 'Black',
+      {
+        id: 2,
+        name: 'Stealth Black Louver',
+        shortName: 'Stealth',
+        pattern: 'louver_gt', // Row 1 Col 1: Matte Black supercar with rear stepped louvers
         body: '#27272a',
-        bodyShade: '#18181b',
-        liveryMain: '#facc15',
-        liveryAccent: '#ef4444',
+        shade: '#18181b',
+        stripe: '#52525b',
+        accent: '#facc15',
         rearDeck: '#09090b',
         spoiler: '#facc15',
         badgeBg: '#facc15',
         badgeText: '#09090b',
-        contour: '#09090b'
+        number: '99'
+      },
+      {
+        id: 3,
+        name: 'Sunburst White-Nose',
+        shortName: 'Solar GT',
+        pattern: 'nose_cap_gt', // Row 1 Col 2: Yellow supercar with white nose hood cap & louvers
+        body: '#facc15',
+        shade: '#eab308',
+        stripe: '#ffffff',
+        accent: '#ef4444',
+        rearDeck: '#1f2937',
+        spoiler: '#facc15',
+        badgeBg: '#111827',
+        badgeText: '#fde047',
+        number: '44'
+      },
+      {
+        id: 4,
+        name: 'Neon Lime Louver',
+        shortName: 'Lime GT',
+        pattern: 'louver_gt', // Row 1 Col 5: Bright Lime green supercar with rear louvers
+        body: '#84cc16',
+        shade: '#65a30d',
+        stripe: '#ecfccb',
+        accent: '#facc15',
+        rearDeck: '#1e293b',
+        spoiler: '#84cc16',
+        badgeBg: '#ffffff',
+        badgeText: '#14532d',
+        number: '33'
+      },
+      {
+        id: 5,
+        name: 'Magenta White-Nose',
+        shortName: 'Pink GT',
+        pattern: 'nose_cap_gt', // Row 2 Col 2: Hot Pink supercar with white front hood cap
+        body: '#ec4899',
+        shade: '#db2777',
+        stripe: '#ffffff',
+        accent: '#fde047',
+        rearDeck: '#831843',
+        spoiler: '#f472b6',
+        badgeBg: '#ffffff',
+        badgeText: '#831843',
+        number: '66'
+      },
+      {
+        id: 6,
+        name: 'Apex Wing Red-Navy',
+        shortName: 'Apex Red',
+        pattern: 'wing_cross', // Row 3 Col 3: Red & Navy split body with off-center cross stripe & big wing
+        body: '#ef4444',
+        shade: '#dc2626',
+        stripe: '#ffffff',
+        accent: '#facc15',
+        rearDeck: '#1e3a8a',
+        spoiler: '#ef4444',
+        badgeBg: '#ffffff',
+        badgeText: '#0f172a',
+        number: '95'
+      },
+      {
+        id: 7,
+        name: 'Cyan-Lime Wing Pro',
+        shortName: 'Cyan Wing',
+        pattern: 'wing_cross', // Row 3 Col 4: Cyan & Lime split body with off-center cross stripe & wing
+        body: '#0284c7',
+        shade: '#0369a1',
+        stripe: '#ffffff',
+        accent: '#fde047',
+        rearDeck: '#84cc16',
+        spoiler: '#0284c7',
+        badgeBg: '#fde047',
+        badgeText: '#0f172a',
+        number: '18'
+      },
+      {
+        id: 8,
+        name: 'Racer #77 Gold-Red',
+        shortName: 'Car #77',
+        pattern: 'Touring_diag', // Row 3 Col 1: Yellow/Red diagonal stripe touring racer #77
+        body: '#facc15',
+        shade: '#eab308',
+        stripe: '#dc2626',
+        accent: '#ffffff',
+        rearDeck: '#991b1b',
+        spoiler: '#dc2626',
+        badgeBg: '#ffffff',
+        badgeText: '#0f172a',
+        number: '77'
+      },
+      {
+        id: 9,
+        name: 'Racer #88 Teal-Gold',
+        shortName: 'Car #88',
+        pattern: 'Touring_diag', // Row 3 Col 2: Teal/Yellow diagonal stripe touring racer #88
+        body: '#0d9488',
+        shade: '#0f766e',
+        stripe: '#facc15',
+        accent: '#ffffff',
+        rearDeck: '#115e59',
+        spoiler: '#facc15',
+        badgeBg: '#ffffff',
+        badgeText: '#0f172a',
+        number: '88'
       }
-    };
-
-    const VEHICLE_SPECS = {
-      race: { name: 'Race Car', shortLabel: 'Race', icon: '🏎️', number: '95', widthRatio: 1.0, heightRatio: 1.02 },
-      truck: { name: 'Big Truck', shortLabel: 'Truck', icon: '🛻', number: '88', widthRatio: 1.10, heightRatio: 1.04 },
-      suv: { name: 'Cool SUV', shortLabel: 'SUV', icon: '🚙', number: '77', widthRatio: 1.05, heightRatio: 1.0 }
-    };
+    ];
 
     /* ==========================================================================
-       4. VECTOR TOP-DOWN ARCADE VEHICLE RENDERER
+       4. VECTOR TOP-DOWN RACE CAR RENDERER (ALL 10 SUPERCAR STYLES)
        ========================================================================== */
-    function drawRaceBodyPath(ctx, w, h) {
+    function drawSculptedHourglassPath(ctx, w, h) {
       const hw = w / 2;
       const hh = h / 2;
       const waist = hw * 0.84;
@@ -1073,7 +1165,7 @@
       ctx.closePath();
     }
 
-    function drawSplitWindshield(ctx, w, topY, height, topSpread = 0.62, botSpread = 0.76) {
+    function drawSplitWindshield(ctx, w, topY, height, topSpread = 0.58, botSpread = 0.74) {
       const leftTop = -w * 0.5 * topSpread;
       const rightTop = w * 0.5 * topSpread;
       const leftBot = -w * 0.5 * botSpread;
@@ -1097,7 +1189,7 @@
       ctx.closePath();
       ctx.fill();
 
-      ctx.strokeStyle = '#1e242b';
+      ctx.strokeStyle = '#111827';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(leftTop, topY);
@@ -1108,29 +1200,51 @@
       ctx.stroke();
     }
 
-    function renderPixarVehicle(ctx, options) {
+    function drawRearLouvers(ctx, w, hh) {
+      const louverTop = hh * 0.22;
+      const louverW = w * 0.48;
+      const louverH = hh * 0.52;
+      ctx.fillStyle = '#1f2937';
+      ctx.beginPath();
+      ctx.roundRect(-louverW / 2, louverTop, louverW, louverH, 4);
+      ctx.fill();
+
+      ctx.fillStyle = '#475569';
+      ctx.fillRect(-louverW * 0.12, louverTop + 2, louverW * 0.55, louverH - 4);
+
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      for (let ly = louverTop + 6; ly < louverTop + louverH - 3; ly += 6) {
+        ctx.beginPath();
+        ctx.moveTo(-louverW / 2 + 2, ly);
+        ctx.lineTo(louverW / 2 - 2, ly);
+        ctx.stroke();
+      }
+    }
+
+    function renderRaceCar(ctx, options) {
       const {
         x, y, width, height,
-        carType = 'race',
-        colorKey = 'red',
+        carIndex = 0,
         speedText = '0',
         isBoosted = false,
-        bounceOffset = 0
+        bounceOffset = 0,
+        showBadge = true
       } = options;
 
-      const pal = CAR_PALETTES[colorKey] || CAR_PALETTES.red;
-      const spec = VEHICLE_SPECS[carType] || VEHICLE_SPECS.race;
-      const w = width * spec.widthRatio;
-      const h = height * spec.heightRatio;
+      const car = TEN_RACE_CARS[carIndex] || TEN_RACE_CARS[0];
+      const w = width;
+      const h = height;
       const hw = w / 2;
       const hh = h / 2;
+      const isTouringBox = car.pattern === 'Touring_diag';
 
       ctx.save();
       ctx.translate(x, y + bounceOffset);
 
       if (isBoosted) {
         const grad = ctx.createRadialGradient(0, 0, w * 0.25, 0, 0, w * 0.95);
-        grad.addColorStop(0, 'rgba(240, 171, 252, 0.92)');
+        grad.addColorStop(0, 'rgba(56, 189, 248, 0.92)');
         grad.addColorStop(0.5, 'rgba(250, 204, 21, 0.75)');
         grad.addColorStop(1, 'rgba(250, 204, 21, 0)');
         ctx.fillStyle = grad;
@@ -1139,249 +1253,196 @@
         ctx.fill();
       }
 
+      // Drop Shadow
       ctx.save();
-      ctx.translate(5, 6);
+      ctx.translate(4, 5);
       ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
-      if (carType === 'race') {
-        drawRaceBodyPath(ctx, w, h);
-        ctx.fill();
-      } else if (carType === 'truck') {
+      if (isTouringBox) {
         ctx.beginPath();
         ctx.roundRect(-hw, -hh, w, h, 14);
         ctx.fill();
       } else {
-        ctx.beginPath();
-        ctx.roundRect(-hw, -hh, w, h, 20);
+        drawSculptedHourglassPath(ctx, w, h);
         ctx.fill();
       }
       ctx.restore();
 
-      const wheelW = carType === 'truck' ? 6 : 4;
-      const wheelH = carType === 'truck' ? 20 : 16;
+      // 4 Racing Slick Tires
+      const wheelW = 4;
+      const wheelH = Math.max(11, h * 0.16);
       ctx.fillStyle = '#090d16';
       [
-        [-hw - wheelW + 2, -hh + 13],
-        [hw - 2, -hh + 13],
-        [-hw - wheelW + 2, hh - 13 - wheelH],
-        [hw - 2, hh - 13 - wheelH]
+        [-hw - wheelW + 2, -hh + h * 0.14],
+        [hw - 2, -hh + h * 0.14],
+        [-hw - wheelW + 2, hh - h * 0.14 - wheelH],
+        [hw - 2, hh - h * 0.14 - wheelH]
       ].forEach(([wx, wy]) => {
         ctx.beginPath();
-        ctx.roundRect(wx, wy, wheelW, wheelH, 3);
+        ctx.roundRect(wx, wy, wheelW, wheelH, 2.5);
         ctx.fill();
       });
 
-      if (carType === 'race') {
-        ctx.save();
-        drawRaceBodyPath(ctx, w, h);
+      // Clip Body Silhouette
+      ctx.save();
+      if (isTouringBox) {
+        ctx.beginPath();
+        ctx.roundRect(-hw, -hh, w, h, 14);
         ctx.clip();
+      } else {
+        drawSculptedHourglassPath(ctx, w, h);
+        ctx.clip();
+      }
 
-        ctx.fillStyle = pal.body;
-        ctx.fillRect(-hw - 2, -hh - 4, w + 4, h + 8);
+      // Base Paint
+      ctx.fillStyle = car.body;
+      ctx.fillRect(-hw - 2, -hh - 4, w + 4, h + 8);
 
-        ctx.fillStyle = pal.bodyShade;
-        ctx.fillRect(-hw, -hh * 0.15, w * 0.18, h * 0.5);
-        ctx.fillRect(hw - w * 0.18, -hh * 0.15, w * 0.18, h * 0.5);
+      // Pattern-Specific Liveries matching the reference sheet
+      if (car.pattern === 'twin_stripe') {
+        ctx.fillStyle = car.shade;
+        ctx.fillRect(-hw, -hh * 0.15, w * 0.16, h * 0.5);
+        ctx.fillRect(hw - w * 0.16, -hh * 0.15, w * 0.16, h * 0.5);
 
-        ctx.fillStyle = pal.rearDeck;
-        ctx.fillRect(-hw, hh * 0.22, w, hh * 0.85);
-        ctx.fillStyle = pal.liveryMain;
-        ctx.fillRect(-hw, hh * 0.20, w, 3.5);
-
-        const stripeW = Math.max(4, w * 0.085);
-        const gap = 3.5;
-        ctx.fillStyle = pal.liveryMain;
+        const stripeW = Math.max(3, w * 0.085);
+        const gap = Math.max(2.5, w * 0.06);
+        ctx.fillStyle = car.stripe;
         ctx.fillRect(-gap / 2 - stripeW, -hh - 4, stripeW, h + 8);
         ctx.fillRect(gap / 2, -hh - 4, stripeW, h + 8);
 
-        const louverTop = hh * 0.28;
-        const louverW = w * 0.48;
-        const louverH = hh * 0.46;
-        ctx.fillStyle = '#1f2937';
+        drawSplitWindshield(ctx, w, -hh * 0.42, h * 0.23);
+        drawSplitWindshield(ctx, w, hh * 0.34, h * 0.15, 0.72, 0.60);
+      } else if (car.pattern === 'louver_gt') {
+        ctx.fillStyle = car.shade;
+        ctx.fillRect(-hw, -hh * 0.15, w * 0.18, h * 0.5);
+        ctx.fillRect(hw - w * 0.18, -hh * 0.15, w * 0.18, h * 0.5);
+
+        drawSplitWindshield(ctx, w, -hh * 0.42, h * 0.24);
+        drawRearLouvers(ctx, w, hh);
+      } else if (car.pattern === 'nose_cap_gt') {
+        // White Front Nose Hood Cap + Rear Louvers (Row 1 Col 2 & Row 2 Col 2)
+        ctx.fillStyle = car.stripe;
         ctx.beginPath();
-        ctx.roundRect(-louverW / 2, louverTop, louverW, louverH, 4);
-        ctx.fill();
-
-        ctx.fillStyle = '#475569';
-        ctx.fillRect(-louverW * 0.22, louverTop + 2, louverW * 0.44, louverH - 4);
-
-        ctx.strokeStyle = '#0f172a';
-        ctx.lineWidth = 2;
-        for (let ly = louverTop + 6; ly < louverTop + louverH - 3; ly += 6) {
-          ctx.beginPath();
-          ctx.moveTo(-louverW / 2 + 2, ly);
-          ctx.lineTo(louverW / 2 - 2, ly);
-          ctx.stroke();
-        }
-
-        drawSplitWindshield(ctx, w, -hh * 0.42, h * 0.24, 0.58, 0.72);
-
-        ctx.fillStyle = '#fde047';
-        ctx.save();
-        ctx.translate(-hw * 0.68, -hh * 0.80);
-        ctx.rotate(-0.45);
-        ctx.beginPath();
-        ctx.roundRect(-5, -2.5, 10, 5, 2);
-        ctx.fill();
-        ctx.restore();
-
-        ctx.save();
-        ctx.translate(hw * 0.68, -hh * 0.80);
-        ctx.rotate(0.45);
-        ctx.beginPath();
-        ctx.roundRect(-5, -2.5, 10, 5, 2);
-        ctx.fill();
-        ctx.restore();
-
-        ctx.restore();
-
-        drawRaceBodyPath(ctx, w, h);
-        ctx.strokeStyle = pal.contour;
-        ctx.lineWidth = 3.5;
-        ctx.stroke();
-
-        const wingW = w * 0.82;
-        ctx.fillStyle = pal.spoiler;
-        ctx.strokeStyle = pal.contour;
-        ctx.lineWidth = 2.8;
-        ctx.beginPath();
-        ctx.roundRect(-wingW / 2, hh - 7, wingW, 10, 3);
-        ctx.fill();
-        ctx.stroke();
-
-      } else if (carType === 'truck') {
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(-hw, -hh, w, h, 14);
-        ctx.clip();
-
-        ctx.fillStyle = pal.body;
-        ctx.fillRect(-hw, -hh, w, h);
-
-        ctx.fillStyle = pal.liveryAccent;
-        ctx.beginPath();
-        ctx.moveTo(-hw, -hh * 0.35);
-        ctx.lineTo(hw, -hh * 0.72);
-        ctx.lineTo(hw, hh * 0.25);
-        ctx.lineTo(-hw, hh * 0.55);
+        ctx.moveTo(-hw * 0.55, -hh - 4);
+        ctx.lineTo(hw * 0.55, -hh - 4);
+        ctx.lineTo(hw * 0.38, -hh * 0.35);
+        ctx.lineTo(-hw * 0.38, -hh * 0.35);
         ctx.closePath();
         ctx.fill();
 
-        ctx.fillStyle = pal.badgeBg;
-        ctx.strokeStyle = pal.contour;
-        ctx.lineWidth = 2;
+        drawSplitWindshield(ctx, w, -hh * 0.40, h * 0.23);
+        drawRearLouvers(ctx, w, hh);
+      } else if (car.pattern === 'wing_cross') {
+        // Two-Tone Rear Deck + Asymmetric Cross Stripe (Row 3 Cols 3, 4, 5)
+        ctx.fillStyle = car.rearDeck;
+        ctx.fillRect(-hw, hh * 0.16, w, hh * 0.9);
+
+        // Horizontal & Vertical Cross Lines
+        ctx.fillStyle = car.stripe;
+        ctx.fillRect(-hw, hh * 0.14, w, Math.max(3, h * 0.035));
+        ctx.fillRect(w * 0.12, -hh - 4, Math.max(3, w * 0.07), h + 8);
+
+        drawSplitWindshield(ctx, w, -hh * 0.42, h * 0.23);
+        drawSplitWindshield(ctx, w, hh * 0.30, h * 0.15, 0.70, 0.58);
+      } else if (car.pattern === 'Touring_diag') {
+        // Diagonal Bold Band + Front Hood Number Pill (#77 / #88 in Row 3)
+        ctx.fillStyle = car.stripe;
         ctx.beginPath();
-        ctx.roundRect(-14, -hh + 11, 28, 16, 5);
+        ctx.moveTo(-hw, -hh * 0.28);
+        ctx.lineTo(hw, -hh * 0.65);
+        ctx.lineTo(hw, hh * 0.28);
+        ctx.lineTo(-hw, hh * 0.58);
+        ctx.closePath();
         ctx.fill();
-        ctx.stroke();
 
-        ctx.font = '900 11px "Baloo 2", Fredoka, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = pal.badgeText;
-        ctx.fillText(spec.number, 0, -hh + 19.5);
+        drawSplitWindshield(ctx, w, -hh * 0.22, h * 0.21, 0.72, 0.78);
+        drawSplitWindshield(ctx, w, hh * 0.36, h * 0.14, 0.74, 0.66);
+      }
 
-        drawSplitWindshield(ctx, w, -hh * 0.32, h * 0.21, 0.74, 0.80);
+      // Angled Corner Headlights
+      ctx.fillStyle = '#fde047';
+      ctx.save();
+      ctx.translate(-hw * 0.68, -hh * 0.82);
+      ctx.rotate(-0.42);
+      ctx.beginPath();
+      ctx.roundRect(-4, -2, 8, 4, 1.5);
+      ctx.fill();
+      ctx.restore();
 
-        const bedX = -hw * 0.76;
-        const bedY = hh * 0.18;
-        const bedW = w * 0.76;
-        const bedH = hh * 0.68;
-        ctx.fillStyle = '#1f2937';
-        ctx.strokeStyle = pal.contour;
-        ctx.lineWidth = 2.5;
-        ctx.beginPath();
-        ctx.roundRect(bedX, bedY, bedW, bedH, 5);
-        ctx.fill();
-        ctx.stroke();
+      ctx.save();
+      ctx.translate(hw * 0.68, -hh * 0.82);
+      ctx.rotate(0.42);
+      ctx.beginPath();
+      ctx.roundRect(-4, -2, 8, 4, 1.5);
+      ctx.fill();
+      ctx.restore();
 
-        ctx.fillStyle = '#374151';
-        ctx.fillRect(-bedW * 0.22, bedY + 2, bedW * 0.44, bedH - 4);
+      ctx.restore(); // End clip
 
-        ctx.strokeStyle = '#111827';
-        ctx.lineWidth = 2;
-        for (let by = bedY + 7; by < bedY + bedH - 3; by += 7) {
-          ctx.beginPath();
-          ctx.moveTo(bedX + 3, by);
-          ctx.lineTo(bedX + bedW - 3, by);
-          ctx.stroke();
-        }
-
-        ctx.restore();
-
-        ctx.strokeStyle = pal.contour;
-        ctx.lineWidth = 3.5;
+      // Bold Outer Contour Stroke
+      ctx.strokeStyle = '#111827';
+      ctx.lineWidth = 3;
+      if (isTouringBox) {
         ctx.beginPath();
         ctx.roundRect(-hw, -hh, w, h, 14);
         ctx.stroke();
-
       } else {
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(-hw, -hh, w, h, 18);
-        ctx.clip();
-
-        ctx.fillStyle = pal.body;
-        ctx.fillRect(-hw, -hh, w, h);
-
-        const centerStripeW = w * 0.34;
-        ctx.fillStyle = pal.liveryMain;
-        ctx.fillRect(-centerStripeW / 2, -hh, centerStripeW, h);
-
-        ctx.fillStyle = pal.liveryAccent;
-        ctx.fillRect(-centerStripeW / 2 - 4, -hh, 2.5, h);
-        ctx.fillRect(centerStripeW / 2 + 1.5, -hh, 2.5, h);
-
-        drawSplitWindshield(ctx, w, -hh * 0.38, h * 0.22, 0.68, 0.78);
-        drawSplitWindshield(ctx, w, hh * 0.34, h * 0.16, 0.74, 0.64);
-
-        ctx.fillStyle = '#1e293b';
-        ctx.fillRect(-w * 0.36, -hh * 0.02, w * 0.72, 4);
-        ctx.fillRect(-w * 0.36, hh * 0.22, w * 0.72, 4);
-
-        ctx.restore();
-
-        ctx.strokeStyle = pal.contour;
-        ctx.lineWidth = 3.5;
-        ctx.beginPath();
-        ctx.roundRect(-hw, -hh, w, h, 18);
+        drawSculptedHourglassPath(ctx, w, h);
         ctx.stroke();
       }
 
-      const badgeY = carType === 'truck' ? -5 : -2;
-      ctx.fillStyle = pal.badgeBg;
-      ctx.strokeStyle = pal.contour;
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.roundRect(-17, badgeY - 10, 34, 20, 6);
-      ctx.fill();
-      ctx.stroke();
+      // Rear Wing Spoiler for Wing Cross & Twin Stripe GT cars
+      if (car.pattern === 'wing_cross' || car.pattern === 'twin_stripe') {
+        const wingW = w * 0.80;
+        ctx.fillStyle = car.spoiler;
+        ctx.strokeStyle = '#111827';
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.roundRect(-wingW / 2, hh - 6, wingW, 8, 2.5);
+        ctx.fill();
+        ctx.stroke();
+      }
 
-      ctx.font = '900 12px "Baloo 2", Fredoka, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = pal.badgeText;
-      ctx.fillText(speedText === '★' ? spec.number : speedText, 0, badgeY + 0.5);
+      // Roof Speed / Car Number Badge
+      if (showBadge) {
+        const badgeY = car.pattern === 'Touring_diag' ? -hh * 0.56 : -2;
+        const bw = Math.max(26, w * 0.58);
+        const bh = Math.max(15, h * 0.20);
+        ctx.fillStyle = car.badgeBg;
+        ctx.strokeStyle = '#111827';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(-bw / 2, badgeY - bh / 2, bw, bh, 5);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = `900 ${Math.max(10, Math.round(bh * 0.62))}px "Baloo 2", Fredoka, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = car.badgeText;
+        ctx.fillText(speedText === '★' ? car.number : speedText, 0, badgeY + 0.5);
+      }
 
       ctx.restore();
     }
 
     /* ==========================================================================
-       5. REAL-WORLD SPEED COMPARISONS
+       5. REAL-WORLD RACING SPEED COMPARISONS
        ========================================================================== */
     function getSpeedComparison(speed) {
-      if (speed <= 0) return { emoji: '🅿️', title: 'Parked at Gate' };
+      if (speed <= 0) return { emoji: '🅿️', title: 'Parked on Grid' };
       if (speed <= 10) return { emoji: '🏃', title: 'Fast Kid Running' };
       if (speed <= 20) return { emoji: '🚲', title: 'Bicycle Speed' };
-      if (speed <= 30) return { emoji: '🐎', title: 'Charging Prince' };
+      if (speed <= 30) return { emoji: '🐎', title: 'Galloping Horse' };
       if (speed <= 40) return { emoji: '🚌', title: 'School Bus' };
-      if (speed <= 50) return { emoji: '🐗', title: 'Hog Rider Dash!' };
+      if (speed <= 50) return { emoji: '🏎️', title: 'Go-Kart Track!' };
       if (speed <= 70) return { emoji: '🐆', title: 'Sprinting Cheetah' };
-      if (speed <= 90) return { emoji: '🚀', title: 'Goblin Rocket!' };
-      return { emoji: '⚡', title: 'Lightning Spell!' };
+      if (speed <= 90) return { emoji: '🚄', title: 'Express Train!' };
+      return { emoji: '🚀', title: 'Formula 1 Jet!' };
     }
 
     /* ==========================================================================
-       6. MAIN CLASH ROYALE MATH RACING ENGINE
+       6. MAIN GRAND PRIX MATH RACING ENGINE
+       (Normalized Time-To-Arrive ensures identical thinking time on phones & tablets!)
        ========================================================================== */
     class SunnyMathRacer {
       constructor() {
@@ -1391,12 +1452,11 @@
         this.previewCtx = this.previewCanvas.getContext('2d');
         this.mathGen = new AdditionGenerator();
 
-        // Player Profile & Customizations
-        this.playerName = 'King Racer';
+        // Driver Profile & 10-Car Selection
+        this.playerName = 'Speedy Racer';
         this.highScores = [];
         this.ageGroup = '6to10';
-        this.carType = 'race';
-        this.carColor = 'red';
+        this.selectedCarIndex = 0; // 0 to 9 (10 Race Cars)
         this.unit = 'km/hr';
         this.distanceUnit = 'km';
 
@@ -1418,8 +1478,8 @@
         this.targetLane = 1;
         this.playerX = 0;
         this.playerY = 0;
-        this.carWidth = 58;
-        this.carHeight = 96;
+        this.carWidth = 56;
+        this.carHeight = 92;
         this.animTime = 0;
 
         this.activeGate = null;
@@ -1433,13 +1493,13 @@
         this.nameInputEl = document.getElementById('player-name-input');
         this.hudNameEl = document.getElementById('hud-player-name');
         this.hudBestEl = document.getElementById('hud-best-score');
+        this.savedScoresCountEl = document.getElementById('saved-scores-count');
         this.livesHeartsEl = document.getElementById('lives-hearts');
         this.livesPanelEl = document.getElementById('lives-panel');
         this.speedValEl = document.getElementById('speed-value');
         this.speedUnitEl = document.getElementById('speed-unit');
         this.compEmojiEl = document.getElementById('comparison-emoji');
         this.compTextEl = document.getElementById('comparison-text');
-        this.hudCarIconEl = document.getElementById('hud-car-icon');
         this.garageSummaryEl = document.getElementById('garage-selection-summary');
         this.ageBadgeHudEl = document.getElementById('age-badge-hud');
         this.solvedEl = document.getElementById('solved-display');
@@ -1455,14 +1515,15 @@
         this.statusBadgeEl = document.getElementById('status-badge');
         this.statusLabelEl = document.getElementById('status-label');
         this.statusBarEl = document.getElementById('status-bar');
-        this.elixirBadgeEl = document.getElementById('elixir-level-badge');
-        this.elixirFillEl = document.getElementById('elixir-bar-fill');
+        this.gearBadgeEl = document.getElementById('gear-level-badge');
+        this.nitroFillEl = document.getElementById('nitro-bar-fill');
 
         this.lastTime = 0;
         this.init();
       }
 
       async init() {
+        this.buildTenCarGrid();
         this.resize();
         window.addEventListener('resize', () => this.resize());
         this.seedScenery();
@@ -1473,10 +1534,75 @@
         requestAnimationFrame((t) => this.loop(t));
       }
 
+      buildTenCarGrid() {
+        const container = document.getElementById('car-grid-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        TEN_RACE_CARS.forEach((car, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.id = `car-slot-${idx}`;
+          btn.className = idx === this.selectedCarIndex ? 'car-slot-btn car-slot-active' : 'car-slot-btn';
+
+          const miniCanvas = document.createElement('canvas');
+          miniCanvas.width = 48;
+          miniCanvas.height = 64;
+          miniCanvas.style.width = '36px';
+          miniCanvas.style.height = '48px';
+
+          const mCtx = miniCanvas.getContext('2d');
+          renderRaceCar(mCtx, {
+            x: 24,
+            y: 32,
+            width: 28,
+            height: 46,
+            carIndex: idx,
+            speedText: '★',
+            showBadge: true
+          });
+
+          const label = document.createElement('span');
+          label.className = 'cr-stroke-sm';
+          label.style.fontSize = '8.5px';
+          label.style.fontWeight = '900';
+          label.style.color = idx === this.selectedCarIndex ? '#fde047' : '#e2e8f0';
+          label.style.marginTop = '2px';
+          label.style.whiteSpace = 'nowrap';
+          label.textContent = car.shortName;
+
+          btn.appendChild(miniCanvas);
+          btn.appendChild(label);
+
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            audio.init();
+            this.selectCar(idx);
+            audio.playRevPreview(idx);
+          });
+
+          container.appendChild(btn);
+        });
+      }
+
+      selectCar(idx) {
+        this.selectedCarIndex = idx;
+        TEN_RACE_CARS.forEach((_, i) => {
+          const btn = document.getElementById(`car-slot-${i}`);
+          if (btn) {
+            btn.className = i === idx ? 'car-slot-btn car-slot-active' : 'car-slot-btn';
+            const span = btn.querySelector('span');
+            if (span) span.style.color = i === idx ? '#fde047' : '#e2e8f0';
+          }
+        });
+        this.updateVehicleBadges();
+        this.renderGaragePreview();
+      }
+
       async loadSavedProfile() {
-        const savedName = await scoreStore.get('playerName', 'King Racer');
+        const savedName = await scoreStore.get('playerName', 'Speedy Racer');
         const savedScores = await scoreStore.get('highScores', []);
-        this.playerName = savedName || 'King Racer';
+        this.playerName = savedName || 'Speedy Racer';
         this.highScores = Array.isArray(savedScores) ? savedScores : [];
         if (this.nameInputEl) this.nameInputEl.value = this.playerName;
         this.hudNameEl.textContent = this.playerName;
@@ -1486,34 +1612,51 @@
       renderLeaderboards() {
         const best = this.highScores.length > 0 ? this.highScores[0].solved : 0;
         if (this.hudBestEl) this.hudBestEl.textContent = best;
+        if (this.savedScoresCountEl) this.savedScoresCountEl.textContent = this.highScores.length;
 
-        const inlineList = document.getElementById('leaderboard-inline-list');
-        if (inlineList) {
-          if (this.highScores.length === 0) {
-            inlineList.innerHTML = '<span>Play to set a record!</span>';
-          } else {
-            inlineList.innerHTML = this.highScores
-              .slice(0, 3)
-              .map((s, idx) => `<span>#${idx + 1} ${s.name}: 🏆${s.solved}</span>`)
-              .join(' • ');
-          }
-        }
+        const formatRow = (s, idx) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(30,41,59,0.85); padding:6px 10px; border-radius:10px; border:1.5px solid ${idx === 0 ? '#fde047' : 'rgba(255,255,255,0.12)'};">
+            <div style="display:flex; flex-direction:column;">
+              <span style="color:${idx === 0 ? '#fde047' : '#f8fafc'}; font-size:12.5px; font-weight:900;">
+                ${idx === 0 ? '🏆 #1' : `#${idx + 1}`} ${s.name}
+              </span>
+              <span style="color:#94a3b8; font-size:9.5px; font-weight:800;">
+                🏎️ ${s.carName || 'Race Car'}
+              </span>
+            </div>
+            <div style="text-align:right;">
+              <span style="color:#fde047; font-size:13px; font-weight:900; display:block;">⭐ ${s.solved} Sums</span>
+              <span style="color:#38bdf8; font-size:10px; font-weight:800;">Top: ${s.topSpeed} ${s.unit}</span>
+            </div>
+          </div>
+        `;
 
         const goList = document.getElementById('gameover-leaderboard-list');
         if (goList) {
           if (this.highScores.length === 0) {
-            goList.innerHTML = '<div style="text-align:center; color:#94a3b8;">No records yet</div>';
+            goList.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:8px;">No race records yet!</div>';
           } else {
-            goList.innerHTML = this.highScores
-              .map((s, idx) => `
-                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(30,41,59,0.75); padding:4px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
-                  <span style="color:${idx === 0 ? '#fde047' : '#f8fafc'};">${idx === 0 ? '👑' : `#${idx + 1}`} ${s.name}</span>
-                  <span style="color:#fde047;">🏆 ${s.solved} sums <span style="color:#38bdf8; font-size:10px;">(${s.topSpeed} ${s.unit})</span></span>
-                </div>
-              `)
-              .join('');
+            goList.innerHTML = this.highScores.slice(0, 5).map(formatRow).join('');
           }
         }
+
+        const allList = document.getElementById('all-scores-list');
+        if (allList) {
+          if (this.highScores.length === 0) {
+            allList.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:24px 8px; font-weight:800;">No races saved yet! Complete a race to record your high score.</div>';
+          } else {
+            allList.innerHTML = this.highScores.map(formatRow).join('');
+          }
+        }
+      }
+
+      openLeaderboardModal() {
+        this.renderLeaderboards();
+        document.getElementById('leaderboard-modal').classList.remove('hidden');
+      }
+
+      closeLeaderboardModal() {
+        document.getElementById('leaderboard-modal').classList.add('hidden');
       }
 
       resize() {
@@ -1521,16 +1664,28 @@
         this.canvas.width = rect.width || window.innerWidth;
         this.canvas.height = rect.height || window.innerHeight;
 
-        // Wide Clash Royale Arena Track
-        this.roadWidth = Math.min(this.canvas.width * 0.80, 430);
+        // Wide Mobile & Tablet Grand Prix Track
+        this.roadWidth = Math.min(this.canvas.width * 0.82, 440);
         this.roadLeft = (this.canvas.width - this.roadWidth) / 2;
         this.laneWidth = this.roadWidth / 3;
 
-        const bottomTrayHeight = document.getElementById('touch-controls')?.offsetHeight || 115;
-        this.carWidth = Math.min(60, Math.max(46, this.laneWidth * 0.54));
+        const topHudHeight = document.getElementById('top-hud')?.offsetHeight || 142;
+        const bottomTrayHeight = document.getElementById('touch-controls')?.offsetHeight || 110;
+
+        this.carWidth = Math.min(58, Math.max(44, this.laneWidth * 0.52));
         this.carHeight = this.carWidth * 1.62;
-        this.playerY = this.canvas.height - bottomTrayHeight - (this.carHeight * 0.68);
+        this.playerY = this.canvas.height - bottomTrayHeight - (this.carHeight * 0.66);
         this.playerX = this.getLaneCenterX(this.targetLane);
+
+        // Calculate Normalized Track Span so Mobile and Tablet have IDENTICAL thinking time
+        this.gateHeight = 56;
+        this.gateStartY = Math.max(124, topHudHeight + 4);
+        this.gateHitY = Math.max(this.gateStartY + 120, this.playerY - this.carHeight * 0.42 - this.gateHeight);
+        this.trackTravelSpan = Math.max(120, this.gateHitY - this.gateStartY);
+
+        if (this.activeGate) {
+          this.activeGate.y = this.gateStartY + this.activeGate.progress * this.trackTravelSpan;
+        }
       }
 
       getLaneCenterX(laneIndex) {
@@ -1538,13 +1693,9 @@
       }
 
       updateVehicleBadges() {
-        const pal = CAR_PALETTES[this.carColor] || CAR_PALETTES.red;
-        const spec = VEHICLE_SPECS[this.carType] || VEHICLE_SPECS.race;
+        const car = TEN_RACE_CARS[this.selectedCarIndex] || TEN_RACE_CARS[0];
         if (this.garageSummaryEl) {
-          this.garageSummaryEl.textContent = `Deck: ${pal.name} ${spec.name}`;
-        }
-        if (this.hudCarIconEl) {
-          this.hudCarIconEl.textContent = spec.icon;
+          this.garageSummaryEl.textContent = `Car #${this.selectedCarIndex + 1}: ${car.name} (#${car.number})`;
         }
       }
 
@@ -1561,13 +1712,12 @@
         const x = isLeft
           ? Math.random() * (sideW - 18) + 9
           : this.roadLeft + this.roadWidth + 9 + Math.random() * (sideW - 18);
-        const types = ['pine', 'crystal', 'crown_bush', 'torch'];
+        const types = ['pine', 'tire_stack', 'bush', 'cone'];
         const type = types[Math.floor(Math.random() * types.length)];
         return { x, y: yPos, type };
       }
 
       bindEvents() {
-        // Helper to bind fast, reliable clicks on mobile & desktop
         const onTap = (el, fn) => {
           if (!el) return;
           el.addEventListener('click', (e) => {
@@ -1576,7 +1726,7 @@
           });
         };
 
-        // 1. Age Group Selector
+        // Age Group Selector
         const u6Btn = document.getElementById('age-u6-btn');
         const a6to10Btn = document.getElementById('age-6to10-btn');
         const selectAgeGroup = (group) => {
@@ -1592,56 +1742,7 @@
         onTap(u6Btn, () => { audio.init(); audio.playPop(); selectAgeGroup('under6'); });
         onTap(a6to10Btn, () => { audio.init(); audio.playPop(); selectAgeGroup('6to10'); });
 
-        // 2. Vehicle Card Selector
-        const carBtns = {
-          race: document.getElementById('car-race-btn'),
-          truck: document.getElementById('car-truck-btn'),
-          suv: document.getElementById('car-suv-btn')
-        };
-        const selectCarType = (type) => {
-          this.carType = type;
-          Object.keys(carBtns).forEach((k) => {
-            carBtns[k].className = k === type
-              ? 'cr-btn cr-btn-gold cr-selected-ring'
-              : 'cr-btn cr-btn-slate';
-          });
-          this.updateVehicleBadges();
-          this.renderGaragePreview();
-        };
-        Object.keys(carBtns).forEach((k) => {
-          onTap(carBtns[k], () => {
-            audio.init();
-            selectCarType(k);
-            audio.playRevPreview(k);
-          });
-        });
-
-        // 3. Armor Paint Color Selector
-        const colorBtns = {
-          red: document.getElementById('color-red-btn'),
-          blue: document.getElementById('color-blue-btn'),
-          black: document.getElementById('color-black-btn')
-        };
-        const colorBaseClass = {
-          red: 'cr-btn cr-btn-red',
-          blue: 'cr-btn cr-btn-blue',
-          black: 'cr-btn cr-btn-slate'
-        };
-        const selectColor = (colorKey) => {
-          this.carColor = colorKey;
-          Object.keys(colorBtns).forEach((k) => {
-            colorBtns[k].className = k === colorKey
-              ? `${colorBaseClass[k]} cr-selected-ring`
-              : colorBaseClass[k];
-          });
-          this.updateVehicleBadges();
-          this.renderGaragePreview();
-        };
-        Object.keys(colorBtns).forEach((k) => {
-          onTap(colorBtns[k], () => { audio.init(); audio.playPop(); selectColor(k); });
-        });
-
-        // 4. Speed Unit Selector
+        // Speed Unit Selector
         const kmBtn = document.getElementById('unit-km-btn');
         const mphBtn = document.getElementById('unit-mph-btn');
         const startBtnUnit = document.getElementById('start-btn-unit');
@@ -1660,7 +1761,44 @@
         onTap(kmBtn, () => { audio.init(); audio.playPop(); selectUnit('km/hr'); });
         onTap(mphBtn, () => { audio.init(); audio.playPop(); selectUnit('mph'); });
 
-        // Start Battle Button
+        // All Saved High Scores Leaderboard Modal Triggers
+        onTap(document.getElementById('open-leaderboard-btn'), () => {
+          audio.init();
+          audio.playPop();
+          this.openLeaderboardModal();
+        });
+        onTap(document.getElementById('hud-scores-btn'), () => {
+          audio.init();
+          audio.playPop();
+          if (this.state === 'PLAYING') {
+            this.state = 'PAUSED';
+            audio.updateEngineSound(0, true);
+            document.getElementById('pause-modal').classList.remove('hidden');
+          }
+          this.openLeaderboardModal();
+        });
+        onTap(document.getElementById('pause-leaderboard-btn'), () => {
+          audio.init();
+          audio.playPop();
+          this.openLeaderboardModal();
+        });
+        onTap(document.getElementById('gameover-all-scores-btn'), () => {
+          audio.init();
+          audio.playPop();
+          this.openLeaderboardModal();
+        });
+        onTap(document.getElementById('close-leaderboard-btn'), () => {
+          audio.init();
+          audio.playPop();
+          this.closeLeaderboardModal();
+        });
+        onTap(document.getElementById('close-leaderboard-x'), () => {
+          audio.init();
+          audio.playPop();
+          this.closeLeaderboardModal();
+        });
+
+        // Start Race Button
         onTap(document.getElementById('start-game-btn'), () => {
           audio.init();
           audio.playPop();
@@ -1695,7 +1833,7 @@
           if (!audio.muted) audio.playPop();
         });
 
-        // Game Over Modal Buttons
+        // Race Over Modal Buttons
         onTap(document.getElementById('gameover-retry-btn'), () => {
           audio.init();
           audio.playPop();
@@ -1710,7 +1848,7 @@
           this.renderGaragePreview();
         });
 
-        // Bottom Wooden Deck Lane Cards (Immediate pointerdown + click support)
+        // Bottom Touch Lane Cards (Immediate pointerdown response for mobile & tablet)
         [0, 1, 2].forEach((laneIdx) => {
           const btn = document.getElementById(`touch-lane-${laneIdx}`);
           if (!btn) return;
@@ -1735,25 +1873,7 @@
           if (this.state === 'PLAYING') this.setLane(Math.min(2, this.targetLane + 1));
         });
 
-        // Keyboard Controls
-        window.addEventListener('keydown', (e) => {
-          if (this.state !== 'PLAYING') return;
-          if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-            this.setLane(Math.max(0, this.targetLane - 1));
-          } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-            this.setLane(Math.min(2, this.targetLane + 1));
-          } else if (e.key === '1') {
-            this.setLane(0);
-          } else if (e.key === '2') {
-            this.setLane(1);
-          } else if (e.key === '3') {
-            this.setLane(2);
-          } else if (e.key === 'Escape' || e.key === 'p' || e.key === 'P') {
-            this.togglePause();
-          }
-        });
-
-        // Track Tap & Swipe Steering
+        // Track Tap & Swipe Steering on Mobile & Tablet
         let pointerStartX = null;
         this.canvas.addEventListener('pointerdown', (e) => {
           pointerStartX = e.clientX;
@@ -1763,7 +1883,7 @@
           const delta = e.clientX - pointerStartX;
           pointerStartX = null;
 
-          if (Math.abs(delta) > 30) {
+          if (Math.abs(delta) > 28) {
             if (delta > 0) this.setLane(Math.min(2, this.targetLane + 1));
             else this.setLane(Math.max(0, this.targetLane - 1));
           } else {
@@ -1784,16 +1904,15 @@
 
         ctx.fillStyle = 'rgba(250, 204, 21, 0.22)';
         ctx.beginPath();
-        ctx.ellipse(w / 2, h / 2 + 2, 36, 36, 0, 0, Math.PI * 2);
+        ctx.ellipse(w / 2, h / 2 + 2, 34, 34, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        renderPixarVehicle(ctx, {
+        renderRaceCar(ctx, {
           x: w / 2,
           y: h / 2,
-          width: 40,
-          height: 66,
-          carType: this.carType,
-          colorKey: this.carColor,
+          width: 38,
+          height: 62,
+          carIndex: this.selectedCarIndex,
           speedText: '★',
           isBoosted: false,
           bounceOffset: Math.sin(this.animTime * 4) * 2
@@ -1807,8 +1926,8 @@
         [0, 1, 2].forEach((idx) => {
           const card = document.getElementById(`touch-lane-${idx}`);
           if (card) {
-            if (idx === newLane) card.classList.add('cr-deck-card-active');
-            else card.classList.remove('cr-deck-card-active');
+            if (idx === newLane) card.classList.add('cr-lane-card-active');
+            else card.classList.remove('cr-lane-card-active');
           }
         });
       }
@@ -1837,8 +1956,8 @@
       }
 
       async startNewGame() {
-        const rawName = this.nameInputEl ? this.nameInputEl.value : 'King Racer';
-        this.playerName = (rawName || 'King Racer').trim().slice(0, 14) || 'King Racer';
+        const rawName = this.nameInputEl ? this.nameInputEl.value : 'Speedy Racer';
+        this.playerName = (rawName || 'Speedy Racer').trim().slice(0, 14) || 'Speedy Racer';
         await scoreStore.set('playerName', this.playerName);
         this.hudNameEl.textContent = this.playerName;
 
@@ -1869,6 +1988,7 @@
         document.getElementById('start-modal').classList.add('hidden');
         document.getElementById('pause-modal').classList.add('hidden');
         document.getElementById('gameover-modal').classList.add('hidden');
+        document.getElementById('leaderboard-modal').classList.add('hidden');
 
         this.spawnNextGate();
         this.updateHUD();
@@ -1878,17 +1998,19 @@
       async triggerGameOver() {
         this.state = 'GAMEOVER';
         audio.updateEngineSound(0, true);
-        audio.playGameOverHorn();
+        audio.playRaceOverHorn();
 
+        const carObj = TEN_RACE_CARS[this.selectedCarIndex] || TEN_RACE_CARS[0];
         this.highScores = await scoreStore.saveScore(
           this.playerName,
           this.solvedCount,
           this.maxSpeedReached,
-          this.unit
+          this.unit,
+          carObj.shortName
         );
         this.renderLeaderboards();
 
-        document.getElementById('gameover-player-line').textContent = `Well played, ${this.playerName}!`;
+        document.getElementById('gameover-player-line').textContent = `Great race, ${this.playerName}!`;
         document.getElementById('go-solved').textContent = `${this.solvedCount}`;
         document.getElementById('go-speed').textContent = `${this.maxSpeedReached} ${this.unit}`;
         document.getElementById('go-distance').textContent = `${this.distanceTraveled.toFixed(2)} ${this.distanceUnit}`;
@@ -1899,7 +2021,6 @@
         const problem = this.mathGen.generate(this.solvedCount, this.ageGroup);
         this.questionEl.textContent = problem.questionText;
 
-        // Sync the 3 bottom Clash Royale Deck Cards with the 3 lane numbers!
         [0, 1, 2].forEach((idx) => {
           const cardAns = document.getElementById(`card-ans-${idx}`);
           if (cardAns) cardAns.textContent = problem.laneAnswers[idx];
@@ -1921,9 +2042,11 @@
         void this.mathBannerEl.offsetWidth;
         this.mathBannerEl.classList.add('pop-anim');
 
-        const topHudHeight = document.getElementById('top-hud').offsetHeight || 150;
+        this.resize();
+        // Gate uses normalized progress (0.0 at top HUD -> 1.0 at car front bumper)
         this.activeGate = {
-          y: Math.max(130, topHudHeight + 4),
+          progress: 0,
+          y: this.gateStartY,
           problem
         };
       }
@@ -1937,7 +2060,7 @@
           this.solvedCount += 1;
           this.boostTimer = 5.0;
           this.slowTimer = 0;
-          this.feedbackMessage = `👑 ROYAL BOOST! ${gate.problem.solutionText} (+10 ${this.unit})`;
+          this.feedbackMessage = `🏁 NITRO BOOST! ${gate.problem.solutionText} (+10 ${this.unit})`;
 
           audio.playSuccessFanfare();
           this.spawnStarBurst(this.playerX, this.playerY - 30, true);
@@ -1948,7 +2071,7 @@
 
           this.slowTimer = 3.0;
           this.boostTimer = 0;
-          this.feedbackMessage = `💔 Oops! ${gate.problem.solutionText} (${this.lives} ${this.lives === 1 ? 'life' : 'lives'} left)`;
+          this.feedbackMessage = `🐢 Pit Penalty! ${gate.problem.solutionText} (${this.lives} ${this.lives === 1 ? 'life' : 'lives'} left)`;
 
           audio.playGentleOops();
           this.spawnStarBurst(this.playerX, this.playerY + 20, false);
@@ -1967,7 +2090,7 @@
 
       spawnStarBurst(x, y, isSuccess) {
         const colors = isSuccess
-          ? ['#fde047', '#f0abfc', '#38bdf8', '#4ade80', '#fb7185']
+          ? ['#fde047', '#38bdf8', '#4ade80', '#fb7185', '#ffffff']
           : ['#fda4af', '#94a3b8', '#e2e8f0'];
         const count = isSuccess ? 26 : 14;
         for (let i = 0; i < count; i++) {
@@ -1990,6 +2113,9 @@
         this.floatingPopups.push({ x, y, text, color, life: 1.5 });
       }
 
+      /* ==========================================================================
+         7. NORMALIZED TIME-BASED UPDATE LOOP (EQUAL THINKING TIME ON ALL SCREENS)
+         ========================================================================== */
       update(dt) {
         this.animTime += dt;
 
@@ -2013,12 +2139,14 @@
         this.displaySpeed += (this.effectiveSpeed - this.displaySpeed) * Math.min(1, dt * 8);
         this.distanceTraveled += (this.effectiveSpeed / 3600) * dt * 60;
 
+        // Visual road scroll scales proportionally with screen height so speed feels uniform
+        const heightScale = (this.canvas.height || 700) / 700;
         const roadScrollPxPerSec = this.effectiveSpeed > 0
-          ? 56 + Math.min(this.effectiveSpeed * 1.4, 155)
+          ? (58 + Math.min(this.effectiveSpeed * 1.4, 155)) * heightScale
           : 0;
 
         this.roadOffset = (this.roadOffset + roadScrollPxPerSec * dt) % 64;
-        this.riverOffset = (this.riverOffset + roadScrollPxPerSec * dt) % 480;
+        this.riverOffset = (this.riverOffset + roadScrollPxPerSec * dt) % 520;
 
         this.sceneryItems.forEach((item) => {
           item.y += roadScrollPxPerSec * dt;
@@ -2028,17 +2156,19 @@
         const desiredX = this.getLaneCenterX(this.targetLane);
         this.playerX += (desiredX - this.playerX) * Math.min(1, dt * 12);
 
+        // NORMALIZED GATE PROGRESS:
+        // Whether the child is on a compact phone (e.g., 320px road) or a tall iPad (e.g., 750px road),
+        // the gate always takes the exact same number of seconds (`gateDurationSeconds`) to reach the car!
         if (this.activeGate) {
-          const baseDrift = this.ageGroup === 'under6' ? 52 : 64;
-          const maxDrift = this.ageGroup === 'under6' ? 120 : 150;
-          const gateApproachSpeed = this.effectiveSpeed === 0
-            ? baseDrift
-            : Math.min(baseDrift + 6 + this.effectiveSpeed * 0.78, maxDrift);
+          const baseThinkSeconds = this.ageGroup === 'under6' ? 6.5 : 5.5;
+          const minThinkSeconds = this.ageGroup === 'under6' ? 3.4 : 2.7;
+          const speedReduction = Math.min(2.8, (this.effectiveSpeed / 100) * 2.5);
+          const gateDurationSeconds = Math.max(minThinkSeconds, baseThinkSeconds - speedReduction);
 
-          this.activeGate.y += gateApproachSpeed * dt;
+          this.activeGate.progress += dt / gateDurationSeconds;
+          this.activeGate.y = this.gateStartY + this.activeGate.progress * this.trackTravelSpan;
 
-          const gateHeight = 58;
-          if ((this.activeGate.y + gateHeight) >= (this.playerY - this.carHeight * 0.42)) {
+          if (this.activeGate.progress >= 1.0) {
             const completedGate = this.activeGate;
             this.handleGateHit(completedGate);
           }
@@ -2061,7 +2191,7 @@
           if (fp.life <= 0) this.floatingPopups.splice(i, 1);
         }
 
-        audio.updateEngineSound(this.effectiveSpeed, false, this.carType);
+        audio.updateEngineSound(this.effectiveSpeed, false);
         this.updateHUD();
       }
 
@@ -2075,22 +2205,22 @@
         this.compEmojiEl.textContent = comp.emoji;
         this.compTextEl.textContent = comp.title;
 
-        // Update Clash Royale Elixir Bar based on speed level (each 10 speed = 1 Elixir level up to 10)
-        const elixirLevel = Math.min(10, Math.floor(this.baseSpeed / 10));
-        const elixirPct = Math.max(6, Math.min(100, (roundedSpeed / 100) * 100));
-        if (this.elixirBadgeEl) this.elixirBadgeEl.textContent = elixirLevel;
-        if (this.elixirFillEl) this.elixirFillEl.style.width = `${elixirPct}%`;
+        // Update Nitro Gear Bar (each +10 speed = 1 Gear level up to Gear 10)
+        const gearLevel = Math.min(10, Math.floor(this.baseSpeed / 10));
+        const nitroPct = Math.max(6, Math.min(100, (roundedSpeed / 100) * 100));
+        if (this.gearBadgeEl) this.gearBadgeEl.textContent = gearLevel;
+        if (this.nitroFillEl) this.nitroFillEl.style.width = `${nitroPct}%`;
 
         const fullUnitWord = this.unit === 'km/hr' ? 'kilometers' : 'miles';
         if (roundedSpeed === 0) {
-          this.meaningTextEl.textContent = `Parked at 0 ${this.unit}. Tap the right Answer Card below to launch at 10 ${this.unit}!`;
+          this.meaningTextEl.textContent = `Parked at 0 ${this.unit}. Tap the right Answer Lane below to launch at 10 ${this.unit}!`;
         } else {
           this.meaningTextEl.textContent = `${roundedSpeed} ${this.unit} = travelling ${roundedSpeed} ${fullUnitWord} in 1 hour!`;
         }
 
         if (this.boostTimer > 0) {
           this.statusCardEl.style.opacity = '1';
-          this.statusBadgeEl.style.background = 'linear-gradient(90deg, #9333ea, #16a34a)';
+          this.statusBadgeEl.style.background = 'linear-gradient(90deg, #0284c7, #16a34a)';
           this.statusLabelEl.textContent = `${this.feedbackMessage} (${this.boostTimer.toFixed(1)}s)`;
           this.statusBarEl.style.width = `${(this.boostTimer / 5.0) * 100}%`;
         } else if (this.slowTimer > 0) {
@@ -2103,11 +2233,14 @@
         }
       }
 
+      /* ==========================================================================
+         8. GRAND PRIX TRACK & SCENERY RENDERER
+         ========================================================================== */
       render() {
         const ctx = this.ctx;
         ctx.save();
 
-        // 1. Clash Royale Checkered Grass Arena Sidelines
+        // 1. Checkered Grand Prix Turf Sidelines
         ctx.fillStyle = '#4d7c0f';
         ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -2119,25 +2252,25 @@
           ctx.fillRect(this.roadLeft + this.roadWidth, y, this.canvas.width - (this.roadLeft + this.roadWidth), tileH);
         }
 
-        // Outer Arena Wooden / Stone Palisade Wall Border
-        ctx.fillStyle = '#451a03';
-        ctx.fillRect(0, 0, 8, this.canvas.height);
-        ctx.fillRect(this.canvas.width - 8, 0, 8, this.canvas.height);
+        // Outer Grandstand Safety Barrier
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(0, 0, 7, this.canvas.height);
+        ctx.fillRect(this.canvas.width - 7, 0, 7, this.canvas.height);
 
-        // 2. Clash Royale River Crossing (flows horizontally under the arena road bridges)
+        // 2. Harbor Water Underpass Bridge
         const riverY = this.riverOffset - 60;
         if (riverY > -70 && riverY < this.canvas.height + 70) {
           ctx.fillStyle = '#06b6d4';
-          ctx.fillRect(8, riverY, this.canvas.width - 16, 44);
+          ctx.fillRect(7, riverY, this.canvas.width - 14, 44);
           ctx.fillStyle = '#67e8f9';
-          ctx.fillRect(8, riverY + 6, this.canvas.width - 16, 8);
-          ctx.fillRect(8, riverY + 28, this.canvas.width - 16, 5);
+          ctx.fillRect(7, riverY + 6, this.canvas.width - 14, 8);
+          ctx.fillRect(7, riverY + 28, this.canvas.width - 14, 5);
         }
 
-        // 3. Roadside Royale Scenery (Trees, Elixir Crystals, Torches)
+        // 3. Trackside Racing Scenery (Trees, Tire Stacks, Cones)
         this.drawScenery(ctx);
 
-        // 4. Royal Stone & Asphalt Battle Road
+        // 4. Grand Prix Asphalt Racing Surface
         const roadGrad = ctx.createLinearGradient(this.roadLeft, 0, this.roadLeft + this.roadWidth, 0);
         roadGrad.addColorStop(0, '#334155');
         roadGrad.addColorStop(0.5, '#475569');
@@ -2145,11 +2278,11 @@
         ctx.fillStyle = roadGrad;
         ctx.fillRect(this.roadLeft, 0, this.roadWidth, this.canvas.height);
 
-        // Wooden Bridge Planks over the River
+        // Track Bridge Deck over Water
         if (riverY > -70 && riverY < this.canvas.height + 70) {
-          ctx.fillStyle = '#b45309';
+          ctx.fillStyle = '#64748b';
           ctx.fillRect(this.roadLeft - 6, riverY - 4, this.roadWidth + 12, 52);
-          ctx.strokeStyle = '#451a03';
+          ctx.strokeStyle = '#1e293b';
           ctx.lineWidth = 3;
           for (let py = riverY; py < riverY + 48; py += 10) {
             ctx.beginPath();
@@ -2159,22 +2292,22 @@
           }
         }
 
-        // Gold & Stone Arena Curbs
+        // Red & White Grand Prix Apex Curbs
         const curbW = 11;
         for (let y = (this.roadOffset % 64) - 64; y < this.canvas.height; y += 32) {
-          const isGold = Math.floor((y - this.roadOffset) / 32) % 2 === 0;
-          ctx.fillStyle = isGold ? '#f59e0b' : '#cbd5e1';
+          const isRed = Math.floor((y - this.roadOffset) / 32) % 2 === 0;
+          ctx.fillStyle = isRed ? '#ef4444' : '#ffffff';
           ctx.fillRect(this.roadLeft - curbW, y, curbW, 32);
           ctx.fillRect(this.roadLeft + this.roadWidth, y, curbW, 32);
         }
 
-        // 5. Starting Line Checkered Banner when Parked at 0
+        // 5. Starting Grid Checkered Line when Parked at 0
         if (this.baseSpeed === 0) {
           this.drawStartLine(ctx, this.playerY - 48);
         }
 
         // 6. Lane Dividers
-        ctx.strokeStyle = 'rgba(248, 250, 252, 0.75)';
+        ctx.strokeStyle = 'rgba(248, 250, 252, 0.78)';
         ctx.lineWidth = 4;
         ctx.setLineDash([22, 22]);
         ctx.lineDashOffset = -this.roadOffset;
@@ -2187,12 +2320,12 @@
         }
         ctx.setLineDash([]);
 
-        // 7. Selected Lane Royal Golden-Blue Carpet Highlight
+        // 7. Active Racing Line Highlight
         const activeLaneLeft = this.roadLeft + this.targetLane * this.laneWidth;
         ctx.fillStyle = 'rgba(250, 204, 21, 0.16)';
         ctx.fillRect(activeLaneLeft, 0, this.laneWidth, this.canvas.height);
 
-        // 8. Approaching Clash Royale 3-Lane Math Gate
+        // 8. Approaching 3-Lane Math Checkpoint Gate
         if (this.activeGate) {
           this.drawSingleMathGate(ctx, this.activeGate);
         }
@@ -2200,15 +2333,14 @@
         // 9. Particles
         this.drawParticles(ctx);
 
-        // 10. Player Vehicle
+        // 10. Player Selected Race Car (1 of 10 Supercars)
         const engineBounce = this.effectiveSpeed > 0 ? Math.sin(this.animTime * 18) * 1.5 : 0;
-        renderPixarVehicle(ctx, {
+        renderRaceCar(ctx, {
           x: this.playerX,
           y: this.playerY,
           width: this.carWidth,
           height: this.carHeight,
-          carType: this.carType,
-          colorKey: this.carColor,
+          carIndex: this.selectedCarIndex,
           speedText: `${Math.round(this.displaySpeed)}`,
           isBoosted: this.boostTimer > 0,
           bounceOffset: engineBounce
@@ -2248,31 +2380,27 @@
             ctx.beginPath();
             ctx.arc(-3, -3, 9, 0, Math.PI * 2);
             ctx.fill();
-          } else if (item.type === 'crystal') {
-            // Clash Royale Purple Elixir Crystal
-            ctx.fillStyle = '#d946ef';
-            ctx.strokeStyle = '#111827';
-            ctx.lineWidth = 2;
+          } else if (item.type === 'tire_stack') {
+            // Red & White Trackside Tire Barrier
+            ctx.fillStyle = '#18181b';
             ctx.beginPath();
-            ctx.moveTo(0, -11);
-            ctx.lineTo(9, 0);
-            ctx.lineTo(0, 11);
-            ctx.lineTo(-9, 0);
-            ctx.closePath();
+            ctx.arc(0, 0, 11, 0, Math.PI * 2);
             ctx.fill();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
             ctx.stroke();
-          } else if (item.type === 'torch') {
             ctx.fillStyle = '#475569';
+            ctx.beginPath();
+            ctx.arc(0, 0, 5, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (item.type === 'cone') {
+            ctx.fillStyle = '#f97316';
             ctx.beginPath();
             ctx.arc(0, 0, 9, 0, Math.PI * 2);
             ctx.fill();
-            ctx.fillStyle = '#f97316';
+            ctx.fillStyle = '#ffffff';
             ctx.beginPath();
-            ctx.arc(0, 0, 6, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#fde047';
-            ctx.beginPath();
-            ctx.arc(0, 0, 3, 0, Math.PI * 2);
+            ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
             ctx.fill();
           } else {
             ctx.fillStyle = '#15803d';
@@ -2290,14 +2418,14 @@
 
       drawSingleMathGate(ctx, gate) {
         const y = gate.y;
-        const gateH = 58;
+        const gateH = this.gateHeight || 56;
         const laneThemes = [
           { top: '#fb7185', bot: '#be123c', shadow: '#4c0519' },
           { top: '#38bdf8', bot: '#0369a1', shadow: '#082f49' },
           { top: '#fbbf24', bot: '#b45309', shadow: '#451a03' }
         ];
 
-        // Golden Battle Bridge Connector Bar
+        // Overhead Checkpoint Gantry Bar
         ctx.fillStyle = '#f59e0b';
         ctx.strokeStyle = '#111827';
         ctx.lineWidth = 2.5;
@@ -2332,10 +2460,10 @@
 
           ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
           ctx.beginPath();
-          ctx.roundRect(boxLeft + 6, y + 4, boxW - 12, 11, 6);
+          ctx.roundRect(boxLeft + 6, y + 4, boxW - 12, 10, 6);
           ctx.fill();
 
-          ctx.font = '900 30px "Baloo 2", Fredoka, sans-serif';
+          ctx.font = '900 29px "Baloo 2", Fredoka, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.lineWidth = 4;
@@ -2364,7 +2492,7 @@
         this.floatingPopups.forEach((fp) => {
           ctx.save();
           ctx.globalAlpha = Math.min(1, fp.life);
-          ctx.font = '900 19px "Baloo 2", Fredoka, sans-serif';
+          ctx.font = '900 18px "Baloo 2", Fredoka, sans-serif';
           ctx.textAlign = 'center';
 
           const textW = ctx.measureText(fp.text).width + 24;
@@ -2395,7 +2523,7 @@
     }
 
     /* ==========================================================================
-       7. INITIALIZE GAME & REGISTER REAL OFFLINE SERVICE WORKER (./sw.js)
+       9. INITIALIZE GAME & REGISTER REAL OFFLINE SERVICE WORKER (./sw.js)
        ========================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
       new SunnyMathRacer();
